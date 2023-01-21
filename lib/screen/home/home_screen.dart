@@ -1,4 +1,4 @@
-import 'package:doctor_green/screen/tabs/disease_detection.dart';
+import 'package:doctor_green/screen/tabs/disease_detection/disease_detection.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {

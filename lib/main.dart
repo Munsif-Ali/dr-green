@@ -2,8 +2,12 @@ import 'package:doctor_green/screen/authentication/login_screen.dart';
 import 'package:doctor_green/screen/authentication/signup_screen.dart';
 import 'package:doctor_green/screen/home/home_screen.dart';
 import 'package:doctor_green/screen/splash_screen.dart';
+import 'package:doctor_green/screen/tabs/disease_detection/detect_disease_screen.dart';
+import 'package:doctor_green/screen/tabs/disease_detection/disease_detection.dart';
+import 'package:doctor_green/screen/tabs/disease_detection/disease_result_screen.dart';
 import 'package:doctor_green/themes/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,6 +29,11 @@ class MyApp extends StatelessWidget {
         LoginScreen.routeName: (context) => const LoginScreen(),
         SignupScreen.routeName: (context) => const SignupScreen(),
         HomeScreen.routeName: (context) => const HomeScreen(),
+        DiseaseDetectionScreen.routeName: (context) =>
+            const DiseaseDetectionScreen(),
+        DetectDiseaseScreen.routeName: (context) => DetectDiseaseScreen(),
+        DiseaseResultScreen.routeName: (context) => DiseaseResultScreen(
+            imageFile: ModalRoute.of(context)!.settings.arguments as XFile),
       },
     );
   }
