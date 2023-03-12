@@ -1,4 +1,7 @@
+import 'package:doctor_green/screen/tabs/blog_list_screen.dart';
 import 'package:doctor_green/screen/tabs/disease_detection/disease_detection.dart';
+import 'package:doctor_green/screen/tabs/favorite_screen.dart';
+import 'package:doctor_green/screen/tabs/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -14,23 +17,18 @@ class _HomeScreenState extends State<HomeScreen> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Blogs',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Favorite',
-      style: optionStyle,
-    ),
+    BlogListScreen(),
+    // Text(
+    //   'Index 1: Favorite',
+    //   style: optionStyle,
+    // ),
+    FavoriteScreen(),
     DiseaseDetectionScreen(),
     Text(
       'Index 3: Shop',
       style: optionStyle,
     ),
-    Text(
-      'Index 3: Profile',
-      style: optionStyle,
-    ),
+    ProfileScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -108,15 +106,18 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            _selectedIndex = 2;
-          });
-        },
-        child: const Icon(
-          Icons.local_hospital,
-          color: Colors.white,
+      floatingActionButton: Container(
+        height: MediaQuery.of(context).viewInsets.bottom == 0 ? 56 : 0,
+        child: FloatingActionButton(
+          onPressed: () {
+            setState(() {
+              _selectedIndex = 2;
+            });
+          },
+          child: const Icon(
+            Icons.local_hospital,
+            color: Colors.white,
+          ),
         ),
       ),
     );

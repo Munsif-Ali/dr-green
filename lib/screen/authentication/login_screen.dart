@@ -69,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Navigator.of(context).pushNamedAndRemoveUntil(
                       SignupScreen.routeName, (route) => false);
                 },
-                child: const Text("Already have account Login"),
+                child: const Text("don't have account create one"),
               ),
               ElevatedButton(
                 onPressed: () {
