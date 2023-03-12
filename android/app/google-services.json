@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "337747615169",
+    "project_id": "dr-green-689e5",
+    "storage_bucket": "dr-green-689e5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:337747615169:android:876dddd392b4bddcb9e340",
+        "android_client_info": {
+          "package_name": "com.example.doctor_green"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "337747615169-vi990h48kubjfu72uubafd9f4aq9d2cn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkoUsKz7RavhxeHXmgAzc3yovj2TboRGw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "337747615169-vi990h48kubjfu72uubafd9f4aq9d2cn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

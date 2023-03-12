@@ -67,7 +67,7 @@ class _DiseaseDetectionScreenState extends State<DiseaseDetectionScreen> {
           );
         },
       ),
-      Text("Something"),
+      const Text("Something"),
       GridView.builder(
         itemCount: plantList.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
