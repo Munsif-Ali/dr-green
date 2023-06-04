@@ -8,7 +8,7 @@ class FavoriteScreen extends StatefulWidget {
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
-  final List<String> _favoritesBlogs = [];
+  final List<String> _favoritesBlogs = ["Something", "Something else"];
   final List<String> _favoritesProducts = [];
   int _selectedIndex = 0;
 
@@ -20,7 +20,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(48.0),
           child: Theme(
-            data: Theme.of(context).copyWith(accentColor: Colors.white),
+            data: Theme.of(context).copyWith(
+                colorScheme:
+                    ColorScheme.fromSwatch().copyWith(secondary: Colors.white)),
             child: BottomNavigationBar(
               currentIndex: _selectedIndex,
               onTap: (index) {
@@ -43,16 +45,16 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         ),
       ),
       body: PageView(
-        children: <Widget>[
-          _buildBlogView(),
-          _buildProductView(),
-        ],
         controller: PageController(initialPage: _selectedIndex),
         onPageChanged: (index) {
           setState(() {
             _selectedIndex = index;
           });
         },
+        children: <Widget>[
+          _buildBlogView(),
+          _buildProductView(),
+        ],
       ),
       // floatingActionButton: FloatingActionButton(
       //   onPressed: () {
@@ -89,9 +91,11 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
           trailing: IconButton(
             icon: const Icon(Icons.delete),
             onPressed: () {
-              setState(() {
-                _favoritesBlogs.removeAt(index);
-              });
+              setState(
+                () {
+                  _favoritesBlogs.removeAt(index);
+                },
+              );
             },
           ),
         );

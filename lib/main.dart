@@ -102,7 +102,7 @@ class MyApp extends StatelessWidget {
         SplashScreen.reouteName: (context) => const SplashScreen(),
         LoginScreen.routeName: (context) => const LoginScreen(),
         SignupScreen.routeName: (context) => const SignupScreen(),
-        HomeScreen.routeName: (context) => const HomeScreen(),
+        HomeScreen.routeName: (context) => HomeScreen(),
         DiseaseDetectionScreen.routeName: (context) =>
             const DiseaseDetectionScreen(),
         DetectDiseaseScreen.routeName: (context) => DetectDiseaseScreen(),

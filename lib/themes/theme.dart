@@ -25,32 +25,32 @@ final lightTheme = ThemeData(
   // )
   // ,
   textTheme: const TextTheme(
-    headline1: TextStyle(
+    displayLarge: TextStyle(
         color: Color(0xFF62BD69),
         fontSize: 24,
         fontFamily: 'Montserrat',
         fontWeight: FontWeight.w800),
-    headline2: TextStyle(
+    displayMedium: TextStyle(
         color: Color(0xFF62BD69),
         fontSize: 22,
         fontFamily: 'Montserrat',
         fontWeight: FontWeight.w800),
-    bodyText1: TextStyle(
+    bodyLarge: TextStyle(
         color: Color(0xFF62BD69),
         fontSize: 18,
         fontFamily: 'Montserrat',
         fontWeight: FontWeight.w500),
-    bodyText2: TextStyle(
+    bodyMedium: TextStyle(
         color: Color(0xFF62BD69),
         fontSize: 16,
         fontFamily: 'Montserrat',
         fontWeight: FontWeight.w500),
-    caption: TextStyle(
+    bodySmall: TextStyle(
         color: Color(0xFF62BD69),
         fontSize: 14,
         fontFamily: 'Montserrat',
         fontWeight: FontWeight.w400),
-    button: TextStyle(
+    labelLarge: TextStyle(
         color: Color(0xFF62BD69),
         fontSize: 18,
         fontFamily: 'Montserrat',
@@ -94,37 +94,37 @@ final darkTheme = ThemeData.dark().copyWith(
   //   button: TextStyle(color: Colors.white, fontSize: 18),
   // ),
   textTheme: const TextTheme(
-    headline1: TextStyle(
+    displayLarge: TextStyle(
         color: Color(0xFF62BD69),
         fontSize: 24,
         fontFamily: 'Montserrat',
         fontWeight: FontWeight.w800),
-    headline2: TextStyle(
+    displayMedium: TextStyle(
         color: Color(0xFF62BD69),
         fontSize: 22,
         fontFamily: 'Montserrat',
         fontWeight: FontWeight.w800),
-    headline3: TextStyle(
+    displaySmall: TextStyle(
         color: Color(0xFF62BD69),
         fontSize: 20,
         fontFamily: 'Montserrat',
         fontWeight: FontWeight.w600),
-    bodyText1: TextStyle(
+    bodyLarge: TextStyle(
         color: Colors.black,
         fontSize: 18,
         fontFamily: 'Montserrat',
         fontWeight: FontWeight.w500),
-    bodyText2: TextStyle(
+    bodyMedium: TextStyle(
         color: Colors.black,
         fontSize: 16,
         fontFamily: 'Montserrat',
         fontWeight: FontWeight.w500),
-    caption: TextStyle(
+    bodySmall: TextStyle(
         color: Color(0xFF62BD69),
         fontSize: 14,
         fontFamily: 'Montserrat',
         fontWeight: FontWeight.w400),
-    button: TextStyle(
+    labelLarge: TextStyle(
         color: Colors.black,
         fontSize: 18,
         fontFamily: 'Montserrat',

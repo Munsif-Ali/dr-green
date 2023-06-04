@@ -64,12 +64,24 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: _submit,
                 child: const Text('LOGIN'),
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                      SignupScreen.routeName, (route) => false);
-                },
-                child: const Text("don't have account create one"),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text("Don't have account?"),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          SignupScreen.routeName, (route) => false);
+                    },
+                    child: const Text(
+                      "create one",
+                      style: TextStyle(
+                        color: Colors.blue,
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ),
+                ],
               ),
               ElevatedButton(
                 onPressed: () {

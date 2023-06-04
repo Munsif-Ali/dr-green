@@ -35,7 +35,7 @@ class DiseaseResultScreen extends StatelessWidget {
                         height: 50,
                         child: Text(
                           "Steps to Cure the disease",
-                          style: Theme.of(context).textTheme.headline5,
+                          style: Theme.of(context).textTheme.headlineSmall,
                         ),
                       ),
                       const Divider(
@@ -50,7 +50,7 @@ class DiseaseResultScreen extends StatelessWidget {
                           itemCount: 10,
                           itemBuilder: (context, index) {
                             return Card(
-                              child: Container(
+                              child: SizedBox(
                                 height: 50,
                                 child: Text("Step#: $index"),
                               ),
@@ -61,11 +61,11 @@ class DiseaseResultScreen extends StatelessWidget {
                     ],
                   );
                 default:
-                  return Center(
+                  return const Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      children: const [
+                      children: [
                         Text("Scanning the Image"),
                         SizedBox(height: 10),
                         Text("Please wait!"),

@@ -26,13 +26,18 @@ class _SignupScreenState extends State<SignupScreen> {
         title: const Text('Signup'),
       ),
       body: SingleChildScrollView(
-        child: Center(
-          child: Form(
-            key: _formKey,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height -
+                  MediaQuery.of(context).padding.top -
+                  kToolbarHeight -
+                  32.0,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   _buildFormField(
                     labelText: "Name",
@@ -40,7 +45,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     onSaved: (value) => _name = value ?? "",
                     validator: (value) {
                       print(value);
-                      if (value == null || value == value.isEmpty) {
+                      if (value == null || value.isEmpty) {
                         return "Enter name";
                       } else {
                         return null;
@@ -75,13 +80,24 @@ class _SignupScreenState extends State<SignupScreen> {
                     onPressed: _submit,
                     child: const Text('SIGNUP'),
                   ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          LoginScreen.routeName, (route) => false);
-                    },
-                    child: const Text("already have account! login"),
-                  )
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      const Text("Already have account?"),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              LoginScreen.routeName, (route) => false);
+                        },
+                        child: const Text(
+                          "Login",
+                          style: TextStyle(
+                            color: Colors.blue,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ],
               ),
             ),

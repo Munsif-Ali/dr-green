@@ -82,6 +82,7 @@ class _DiseaseDetectionScreenState extends State<DiseaseDetectionScreen> {
             elevation: 3,
             child: Column(
               children: [
+               
                 const Expanded(
                   child: Padding(
                     padding: EdgeInsets.all(8.0),
