@@ -1,8 +1,6 @@
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});

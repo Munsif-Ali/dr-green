@@ -65,7 +65,7 @@ class BlogDetailsScreen extends StatelessWidget {
                       tag: "title${blog.id}",
                       child: Text(
                         "${blog.title}",
-                        style: Theme.of(context).textTheme.headline1,
+                        style: Theme.of(context).textTheme.displayLarge,
                       ),
                     ),
                   ),

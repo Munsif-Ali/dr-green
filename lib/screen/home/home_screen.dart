@@ -4,9 +4,14 @@ import 'package:doctor_green/screen/tabs/favorite_screen.dart';
 import 'package:doctor_green/screen/tabs/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../tabs/shop/shop_screen.dart';
+
 class HomeScreen extends StatefulWidget {
   static const String routeName = "/homeScreen";
-  const HomeScreen({super.key});
+  HomeScreen({super.key, this.lat = 0, this.long = 0});
+
+  double lat;
+  double long;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -14,8 +19,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 2;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     BlogListScreen(),
     // Text(
@@ -24,10 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // ),
     FavoriteScreen(),
     DiseaseDetectionScreen(),
-    Text(
-      'Index 3: Shop',
-      style: optionStyle,
-    ),
+    ShopScreen(),
     ProfileScreen(),
   ];
 
@@ -106,7 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Container(
+      floatingActionButton: SizedBox(
         height: MediaQuery.of(context).viewInsets.bottom == 0 ? 56 : 0,
         child: FloatingActionButton(
           onPressed: () {

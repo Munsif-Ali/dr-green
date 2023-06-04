@@ -74,8 +74,8 @@ class DetectDiseaseScreen extends StatelessWidget {
                               }
                             });
                           },
-                          icon: Icon(Icons.camera),
-                          label: Text("Take with camera"),
+                          icon: const Icon(Icons.camera),
+                          label: const Text("Take with camera"),
                         ),
                         TextButton.icon(
                           onPressed: () async {
@@ -89,8 +89,8 @@ class DetectDiseaseScreen extends StatelessWidget {
                               }
                             });
                           },
-                          icon: Icon(Icons.browse_gallery),
-                          label: Text("Choose from Gallery"),
+                          icon: const Icon(Icons.browse_gallery),
+                          label: const Text("Choose from Gallery"),
                         )
                       ],
                     ),
