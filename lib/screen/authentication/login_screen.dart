@@ -1,5 +1,6 @@
 import 'package:doctor_green/screen/authentication/signup_screen.dart';
 import 'package:doctor_green/screen/home/home_screen.dart';
+import 'package:doctor_green/services/authentication.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -102,10 +103,13 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void _submit() {
+  void _submit() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      // Perform login here
+      bool isSuccessful = await Authentication.login(
+        _email.trim(),
+        _password.trim(),
+      );
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('Email: $_email, Password: $_password'),
