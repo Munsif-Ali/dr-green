@@ -1,4 +1,5 @@
 import 'package:doctor_green/screen/authentication/login_screen.dart';
+import 'package:doctor_green/services/authentication.dart';
 import 'package:flutter/material.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -42,7 +43,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   _buildFormField(
                     labelText: "Name",
                     hintText: "Enter your name",
-                    onSaved: (value) => _name = value ?? "",
+                    onSaved: (value) => _name = value?.trim() ?? "",
                     validator: (value) {
                       print(value);
                       if (value == null || value.isEmpty) {
@@ -56,25 +57,28 @@ class _SignupScreenState extends State<SignupScreen> {
                   _buildFormField(
                     labelText: "Email",
                     hintText: "Enter your email address",
-                    onSaved: (value) => _email = value ?? "",
+                    onSaved: (value) => _email = value?.trim() ?? "",
                   ),
                   const SizedBox(height: 16.0),
                   _buildFormField(
                     labelText: "Password",
                     hintText: "Enter your password",
-                    onSaved: (value) => _password = value ?? "",
+                    onSaved: (value) => _password = value?.trim() ?? "",
+                    isObscure: true,
                   ),
                   const SizedBox(height: 16.0),
                   _buildFormField(
-                      labelText: "Confirm Password",
-                      hintText: "Confirm your password",
-                      onSaved: (value) => _confirmPassword = value ?? "",
-                      validator: (value) {
-                        if (_password != value) {
-                          return 'Password does not match';
-                        }
-                        return null;
-                      }),
+                    labelText: "Confirm Password",
+                    hintText: "Confirm your password",
+                    isObscure: true,
+                    onSaved: (value) => _confirmPassword = value?.trim() ?? "",
+                    validator: (value) {
+                      if (_password != value) {
+                        return 'Password does not match';
+                      }
+                      return null;
+                    },
+                  ),
                   const SizedBox(height: 16.0),
                   ElevatedButton(
                     onPressed: _submit,
@@ -113,8 +117,10 @@ class _SignupScreenState extends State<SignupScreen> {
     void Function(String?)? onSaved,
     String? Function(String?)? validator,
     bool? isObscure,
+    TextEditingController? controller,
   }) {
     return TextFormField(
+      controller: controller,
       decoration: InputDecoration(
         labelText: labelText,
         hintText: hintText,
@@ -125,12 +131,23 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
-  void _submit() {
+  void _submit() async {
+    _formKey.currentState!.save();
     if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
-      // Perform signup here
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Name: $_name, Email: $_email")));
+      bool isSuccessful = await Authentication.signup(
+              name: _name, email: _email, password: _password) ??
+          false;
+      if (context.mounted) {
+        if (isSuccessful) {
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil(LoginScreen.routeName, (route) => false);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text("Something went wrong")));
+        }
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Name: $_name, Email: $_email")));
+      }
     }
   }
 }

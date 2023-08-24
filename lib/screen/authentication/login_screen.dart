@@ -28,69 +28,74 @@ class _LoginScreenState extends State<LoginScreen> {
         key: _formKey,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                  hintText: 'Enter your email address',
-                ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  return null;
-                },
-                onSaved: (value) => _email = value ?? "",
-              ),
-              const SizedBox(height: 16.0),
-              TextFormField(
-                obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                  hintText: 'Enter your password',
-                ),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  return null;
-                },
-                onSaved: (value) => _password = value ?? "",
-              ),
-              const SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: _submit,
-                child: const Text('LOGIN'),
-              ),
-              Row(
+          child: SingleChildScrollView(
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("Don't have account?"),
-                  TextButton(
+                children: <Widget>[
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Email',
+                      hintText: 'Enter your email address',
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your email';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) => _email = value ?? "",
+                  ),
+                  const SizedBox(height: 16.0),
+                  TextFormField(
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      labelText: 'Password',
+                      hintText: 'Enter your password',
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      return null;
+                    },
+                    onSaved: (value) => _password = value ?? "",
+                  ),
+                  const SizedBox(height: 16.0),
+                  ElevatedButton(
+                    onPressed: _submit,
+                    child: const Text('LOGIN'),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Don't have account?"),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              SignupScreen.routeName, (route) => false);
+                        },
+                        child: const Text(
+                          "create one",
+                          style: TextStyle(
+                            color: Colors.blue,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pushNamedAndRemoveUntil(
-                          SignupScreen.routeName, (route) => false);
+                          HomeScreen.routeName, (route) => false);
                     },
-                    child: const Text(
-                      "create one",
-                      style: TextStyle(
-                        color: Colors.blue,
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
+                    child: const Text('Continue as Guest'),
                   ),
                 ],
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                      HomeScreen.routeName, (route) => false);
-                },
-                child: const Text('Continue as Guest'),
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -101,9 +106,11 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       // Perform login here
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Email: $_email, Password: $_password'),
-      ));
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Email: $_email, Password: $_password'),
+        ),
+      );
     }
   }
 }

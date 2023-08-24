@@ -8,85 +8,16 @@ import 'package:doctor_green/screen/tabs/disease_detection/detect_disease_screen
 import 'package:doctor_green/screen/tabs/disease_detection/disease_detection.dart';
 import 'package:doctor_green/screen/tabs/disease_detection/disease_result_screen.dart';
 import 'package:doctor_green/themes/theme.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
-// class MyApp extends StatefulWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   State<MyApp> createState() => _MyAppState();
-// }
-
-// class _MyAppState extends State<MyApp> {
-//   ThemeMode mode = ThemeMode.dark;
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-//       darkTheme: ThemeData(scaffoldBackgroundColor: Colors.black),
-//       themeMode: mode,
-//       home: HomePage(
-//         changeThemeToDark: () {
-//           setState(() {
-//             mode = ThemeMode.dark;
-//           });
-//         },
-//         changeThemeToLight: () {
-//           setState(() {
-//             mode = ThemeMode.light;
-//           });
-//           print("changes=d");
-//         },
-//         changeThemeToSystem: () {
-//           mode = ThemeMode.system;
-//         },
-//       ),
-//     );
-//   }
-// }
-
-// class HomePage extends StatelessWidget {
-//   const HomePage(
-//       {Key? key,
-//       required this.changeThemeToDark,
-//       required this.changeThemeToSystem,
-//       required this.changeThemeToLight})
-//       : super(key: key);
-
-//   final VoidCallback changeThemeToDark;
-//   final VoidCallback changeThemeToSystem;
-//   final VoidCallback changeThemeToLight;
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         body: Column(
-//       mainAxisAlignment: MainAxisAlignment.center,
-//       children: [
-//         ElevatedButton(
-//             onPressed: () {
-//               changeThemeToDark();
-//             },
-//             child: const Text('Dark mode')),
-//         ElevatedButton(
-//             onPressed: () {
-//               changeThemeToLight();
-//             },
-//             child: const Text('Light mode')),
-//         ElevatedButton(
-//             onPressed: () {
-//               changeThemeToSystem();
-//             },
-//             child: const Text('System mode')),
-//       ],
-//     ));
-//   }
-// }
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
