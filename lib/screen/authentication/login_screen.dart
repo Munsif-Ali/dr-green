@@ -110,11 +110,18 @@ class _LoginScreenState extends State<LoginScreen> {
         _email.trim(),
         _password.trim(),
       );
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Email: $_email, Password: $_password'),
-        ),
-      );
+      if (context.mounted) {
+        if (isSuccessful) {
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil(HomeScreen.routeName, (route) => false);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text("Invalid email or password"),
+            ),
+          );
+        }
+      }
     }
   }
 }

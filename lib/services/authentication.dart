@@ -32,4 +32,8 @@ class Authentication {
     }
     return true;
   }
+
+  static void logout() async {
+    await auth.signOut();
+  }
 }

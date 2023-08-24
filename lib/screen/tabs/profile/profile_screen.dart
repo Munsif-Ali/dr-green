@@ -1,6 +1,9 @@
 import 'dart:ui';
 
+import 'package:doctor_green/services/authentication.dart';
 import 'package:flutter/material.dart';
+
+import '../../authentication/login_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -104,7 +107,11 @@ class ProfileScreen extends StatelessWidget {
                   child: SizedBox(
                     width: double.infinity,
                     child: TextButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        Authentication.logout();
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            LoginScreen.routeName, (route) => false);
+                      },
                       icon: const Icon(
                         Icons.logout,
                         color: Colors.red,
