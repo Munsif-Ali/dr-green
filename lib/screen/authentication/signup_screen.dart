@@ -1,5 +1,5 @@
 import 'package:doctor_green/screen/authentication/login_screen.dart';
-import 'package:doctor_green/services/authentication.dart';
+import 'package:doctor_green/services/firbase_authentication.dart';
 import 'package:flutter/material.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -134,20 +134,20 @@ class _SignupScreenState extends State<SignupScreen> {
   void _submit() async {
     _formKey.currentState!.save();
     if (_formKey.currentState!.validate()) {
-      bool isSuccessful = await Authentication.signup(
-              name: _name, email: _email, password: _password) ??
-          false;
-      if (context.mounted) {
-        if (isSuccessful) {
-          Navigator.of(context)
-              .pushNamedAndRemoveUntil(LoginScreen.routeName, (route) => false);
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Something went wrong")));
-        }
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Name: $_name, Email: $_email")));
-      }
+      // bool isSuccessful = await Authentication.signup(
+      //         name: _name, email: _email, password: _password) ??
+      //     false;
+      // if (context.mounted) {
+      //   if (isSuccessful) {
+      //     Navigator.of(context)
+      //         .pushNamedAndRemoveUntil(LoginScreen.routeName, (route) => false);
+      //   } else {
+      //     ScaffoldMessenger.of(context).showSnackBar(
+      //         const SnackBar(content: Text("Something went wrong")));
+      //   }
+      //   ScaffoldMessenger.of(context).showSnackBar(
+      //       SnackBar(content: Text("Name: $_name, Email: $_email")));
+      // }
     }
   }
 }

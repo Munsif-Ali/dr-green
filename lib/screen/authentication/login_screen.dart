@@ -1,6 +1,10 @@
+import 'package:doctor_green/constants/routes_constants.dart';
+import 'package:doctor_green/helpers/dialogs/error_dialog.dart';
 import 'package:doctor_green/screen/authentication/signup_screen.dart';
 import 'package:doctor_green/screen/home/home_screen.dart';
-import 'package:doctor_green/services/authentication.dart';
+import 'package:doctor_green/services/authentication/auth_service.dart';
+import 'package:doctor_green/services/exceptions/auth_exception.dart';
+import 'package:doctor_green/services/firbase_authentication.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -46,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       }
                       return null;
                     },
-                    onSaved: (value) => _email = value ?? "",
+                    onSaved: (value) => _email = value?.trim() ?? "",
                   ),
                   const SizedBox(height: 16.0),
                   TextFormField(
@@ -90,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ElevatedButton(
                     onPressed: () {
                       Navigator.of(context).pushNamedAndRemoveUntil(
-                          HomeScreen.routeName, (route) => false);
+                          kHomeScreenRoute, (route) => false);
                     },
                     child: const Text('Continue as Guest'),
                   ),
@@ -106,22 +110,35 @@ class _LoginScreenState extends State<LoginScreen> {
   void _submit() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      bool isSuccessful = await Authentication.login(
-        _email.trim(),
-        _password.trim(),
-      );
-      if (context.mounted) {
-        if (isSuccessful) {
-          Navigator.of(context)
-              .pushNamedAndRemoveUntil(HomeScreen.routeName, (route) => false);
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("Invalid email or password"),
-            ),
-          );
-        }
+      try {
+        await AuthService.firebase()
+            .logIn(
+          email: _email,
+          password: _password,
+        )
+            .then(
+          (_) {
+            var user = AuthService.firebase().currentUser;
+            if (user?.isEmailVerified ?? false) {
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                kHomeScreenRoute,
+                (route) => false,
+              );
+            } else {
+              // Navigator.of(context).pushNamedAndRemoveUntil(
+              //   verifyEmailRoute,
+              //   (route) => false,
+              // );
+            }
+          },
+        );
+      } on AuthenticationException catch (e) {
+        showErrorDialog(
+          context,
+          e.getMessage,
+        );
       }
+      if (context.mounted) {}
     }
   }
 }

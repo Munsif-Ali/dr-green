@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import '../tabs/shop/shop_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  static const String routeName = "/homeScreen";
   HomeScreen({super.key, this.lat = 0, this.long = 0});
 
   double lat;

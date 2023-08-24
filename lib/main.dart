@@ -1,3 +1,4 @@
+import 'package:doctor_green/constants/routes_constants.dart';
 import 'package:doctor_green/models/blogs_model.dart';
 import 'package:doctor_green/screen/authentication/login_screen.dart';
 import 'package:doctor_green/screen/authentication/signup_screen.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
         SplashScreen.reouteName: (context) => const SplashScreen(),
         LoginScreen.routeName: (context) => const LoginScreen(),
         SignupScreen.routeName: (context) => const SignupScreen(),
-        HomeScreen.routeName: (context) => HomeScreen(),
+        kHomeScreenRoute: (context) => HomeScreen(),
         DiseaseDetectionScreen.routeName: (context) =>
             const DiseaseDetectionScreen(),
         DetectDiseaseScreen.routeName: (context) => DetectDiseaseScreen(),
