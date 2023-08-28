@@ -1,20 +1,36 @@
 class BlogsModel {
-  int? id;
+  String? id;
   String? title;
   String? body;
-  int? userId;
+  String? userId;
+  String? imageUrl;
   List<String>? tags;
+  List<String>? likes;
   int? reactions;
 
-  BlogsModel(
-      {this.id, this.title, this.body, this.userId, this.tags, this.reactions});
+  BlogsModel({
+    this.id,
+    this.title,
+    this.body,
+    this.userId,
+    this.tags,
+    this.likes,
+    this.reactions,
+    this.imageUrl,
+  });
 
   BlogsModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     body = json['body'];
     userId = json['userId'];
-    tags = json['tags'].cast<String>();
+    imageUrl = json['imageUrl'];
+    tags = json['tags'];
+
+    if (json['likes'] != null) {
+      likes = json['likes'].cast<String>();
+    }
+
     reactions = json['reactions'];
   }
 
@@ -24,7 +40,9 @@ class BlogsModel {
     data['title'] = title;
     data['body'] = body;
     data['userId'] = userId;
+    data['imageUrl'] = imageUrl;
     data['tags'] = tags;
+    data['likes'] = likes;
     data['reactions'] = reactions;
     return data;
   }
