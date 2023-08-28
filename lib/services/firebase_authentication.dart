@@ -5,6 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart'
     show FirebaseAuth, FirebaseAuthException;
 import '../../firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseAuthProvider implements AuthProvider {
   @override
@@ -27,6 +28,11 @@ class FirebaseAuthProvider implements AuthProvider {
       );
       final user = currentUser;
       if (user != null) {
+        // store user data in firestore
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.id)
+            .set({'name': name, 'email': email});
         return user;
       } else {
         throw UserNotLoggedInAuthException();
