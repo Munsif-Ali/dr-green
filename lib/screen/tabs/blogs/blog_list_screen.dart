@@ -84,6 +84,7 @@ class BlogListScreen extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: null,
         onPressed: () {
           context.pushNamed(kCreateBlogScreenRoute);
         },
