@@ -1,16 +1,30 @@
 import 'dart:convert';
 
+import 'package:doctor_green/constants/globals_variables.dart';
 import 'package:doctor_green/models/blogs_model.dart';
-import 'package:http/http.dart' as https;
 
 Future<List<BlogsModel>> getPosts() async {
-  final response =
-      await https.get(Uri.parse("https://dummyjson.com/posts?limit=10"));
-  List<BlogsModel> posts = [];
-  if (response.statusCode == 200) {
-    final List rawPosts = jsonDecode(response.body)["posts"];
-    posts = rawPosts.map((post) => BlogsModel.fromJson(post)).toList();
-  }
+  ("getPosts called");
+  // get blogs from firestore
+  try {
+    final response = await firebaseFirestore.collection('blogs').get();
+    ('response: $response');
+    final List<BlogsModel> posts = [];
+    ("response.docs: ${response.docs}");
+    for (final doc in response.docs) {
+      final data = doc.data();
+      ("data: ${jsonEncode(data)}");
+      final BlogsModel post = BlogsModel.fromJson(data);
+      ("post: ${post.title}");
+      ("test");
+      posts.add(post);
+    }
+    ("posts: ${posts.length}");
+    ("first post: ${posts.first.title}");
 
-  return posts;
+    return posts;
+  } catch (e) {
+    ("error: $e");
+    return [];
+  }
 }
