@@ -1,6 +1,7 @@
 import 'dart:ui';
 
-import 'package:doctor_green/screen/authentication/login_screen.dart';
+import 'package:doctor_green/constants/globals_variables.dart';
+import 'package:doctor_green/constants/routes_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -16,7 +17,13 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.of(context).pushReplacementNamed(LoginScreen.routeName);
+      final isLoggedIn =
+          sharedPreferences?.getString("email") != null ? true : false;
+      if (isLoggedIn) {
+        Navigator.of(context).pushReplacementNamed(kHomeScreenRoute);
+      } else {
+        Navigator.of(context).pushReplacementNamed(kLoginScreenRoute);
+      }
     });
   }
 
