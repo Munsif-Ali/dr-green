@@ -49,7 +49,6 @@ class _SignupScreenState extends State<SignupScreen> {
                     hintText: "Enter your name",
                     onSaved: (value) => _name = value?.trim() ?? "",
                     validator: (value) {
-                      print(value);
                       if (value == null || value.isEmpty) {
                         return "Enter name";
                       } else {
@@ -61,12 +60,14 @@ class _SignupScreenState extends State<SignupScreen> {
                   _buildFormField(
                     labelText: "Email",
                     hintText: "Enter your email address",
+                    keyboardType: TextInputType.emailAddress,
                     onSaved: (value) => _email = value?.trim() ?? "",
                   ),
                   const SizedBox(height: 16.0),
                   _buildFormField(
                     labelText: "Password",
                     hintText: "Enter your password",
+                    keyboardType: TextInputType.visiblePassword,
                     onSaved: (value) => _password = value?.trim() ?? "",
                     isObscure: true,
                   ),
@@ -75,6 +76,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     labelText: "Confirm Password",
                     hintText: "Confirm your password",
                     isObscure: true,
+                    keyboardType: TextInputType.visiblePassword,
                     onSaved: (value) => _confirmPassword = value?.trim() ?? "",
                     validator: (value) {
                       if (_password != value) {
@@ -120,6 +122,7 @@ class _SignupScreenState extends State<SignupScreen> {
     required String hintText,
     void Function(String?)? onSaved,
     String? Function(String?)? validator,
+    TextInputType? keyboardType,
     bool? isObscure,
     TextEditingController? controller,
   }) {
@@ -129,6 +132,7 @@ class _SignupScreenState extends State<SignupScreen> {
         labelText: labelText,
         hintText: hintText,
       ),
+      keyboardType: keyboardType,
       obscureText: isObscure ?? false,
       validator: validator,
       onSaved: onSaved,
