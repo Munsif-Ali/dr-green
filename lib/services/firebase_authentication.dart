@@ -1,3 +1,4 @@
+import 'package:doctor_green/constants/globals_variables.dart';
 import 'package:doctor_green/services/authentication/auth_provider.dart';
 import 'package:doctor_green/services/authentication/auth_user.dart';
 import 'package:doctor_green/services/exceptions/auth_exception.dart';
@@ -22,10 +23,14 @@ class FirebaseAuthProvider implements AuthProvider {
     required String name,
   }) async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
         email: email,
         password: password,
-      );
+      )
+          .then((value) async {
+        await value.user!.updateDisplayName(name);
+      });
       final user = currentUser;
       if (user != null) {
         // store user data in firestore
@@ -33,6 +38,9 @@ class FirebaseAuthProvider implements AuthProvider {
             .collection('users')
             .doc(user.id)
             .set({'name': name, 'email': email});
+
+        // save user data in shared preferences
+        storeUserDataInSharedPref();
         return user;
       } else {
         throw UserNotLoggedInAuthException();
@@ -74,6 +82,7 @@ class FirebaseAuthProvider implements AuthProvider {
       );
       final user = currentUser;
       if (user != null) {
+        storeUserDataInSharedPref();
         return user;
       } else {
         throw UserNotLoggedInAuthException();
@@ -110,4 +119,15 @@ class FirebaseAuthProvider implements AuthProvider {
   //     throw UserNotLoggedInAuthException();
   //   }
   // }
+
+  void storeUserDataInSharedPref() async {
+    final user = currentUser;
+    if (user != null) {
+      await sharedPreferences!.setString('id', user.id);
+      await sharedPreferences!.setString('name', user.name);
+      await sharedPreferences!.setString('email', user.email);
+    } else {
+      throw UserNotLoggedInAuthException();
+    }
+  }
 }
