@@ -1,5 +1,5 @@
 import 'package:doctor_green/services/authentication/auth_user.dart';
-import 'package:doctor_green/services/firbase_authentication.dart';
+import 'package:doctor_green/services/firebase_authentication.dart';
 import 'auth_provider.dart';
 
 class AuthService implements AuthProvider {
@@ -12,10 +12,12 @@ class AuthService implements AuthProvider {
   Future<AuthUser> createUser({
     required String email,
     required String password,
+    required String name,
   }) =>
       provider.createUser(
         email: email,
         password: password,
+        name: name,
       );
 
   @override
@@ -34,8 +36,8 @@ class AuthService implements AuthProvider {
   @override
   Future<void> logOut() => provider.logOut();
 
-  @override
-  Future<void> sendEmailVerification() => provider.sendEmailVerification();
+  // @override
+  // Future<void> sendEmailVerification() => provider.sendEmailVerification();
 
   @override
   Future<void> initialize() => provider.initialize();

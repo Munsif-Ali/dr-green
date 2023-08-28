@@ -1,4 +1,4 @@
-import 'package:doctor_green/screen/tabs/blog_list_screen.dart';
+import 'package:doctor_green/screen/tabs/blogs/blog_list_screen.dart';
 import 'package:doctor_green/screen/tabs/disease_detection/disease_detection.dart';
 import 'package:doctor_green/screen/tabs/favorite_screen.dart';
 import 'package:doctor_green/screen/tabs/profile/profile_screen.dart';

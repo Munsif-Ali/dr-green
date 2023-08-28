@@ -46,12 +46,15 @@ class BlogDetailsScreen extends StatelessWidget {
                     },
                   ),
                 ),
-                const Positioned(
+                Positioned(
                   right: 20,
                   top: 20,
-                  child: Icon(
-                    Icons.favorite_border,
-                    size: 32,
+                  child: InkWell(
+                    onTap: () {},
+                    child: const Icon(
+                      Icons.favorite_border,
+                      size: 32,
+                    ),
                   ),
                 ),
               ],

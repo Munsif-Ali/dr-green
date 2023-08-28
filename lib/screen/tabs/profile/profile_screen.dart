@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:doctor_green/services/firbase_authentication.dart';
+import 'package:doctor_green/services/firebase_authentication.dart';
 import 'package:flutter/material.dart';
 
 import '../../authentication/login_screen.dart';

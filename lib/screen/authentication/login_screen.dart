@@ -4,7 +4,7 @@ import 'package:doctor_green/screen/authentication/signup_screen.dart';
 import 'package:doctor_green/screen/home/home_screen.dart';
 import 'package:doctor_green/services/authentication/auth_service.dart';
 import 'package:doctor_green/services/exceptions/auth_exception.dart';
-import 'package:doctor_green/services/firbase_authentication.dart';
+import 'package:doctor_green/services/firebase_authentication.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -119,7 +119,7 @@ class _LoginScreenState extends State<LoginScreen> {
             .then(
           (_) {
             var user = AuthService.firebase().currentUser;
-            if (user?.isEmailVerified ?? false) {
+            if (user != null) {
               Navigator.of(context).pushNamedAndRemoveUntil(
                 kHomeScreenRoute,
                 (route) => false,

@@ -5,6 +5,7 @@ import 'package:doctor_green/screen/authentication/signup_screen.dart';
 import 'package:doctor_green/screen/home/home_screen.dart';
 import 'package:doctor_green/screen/splash_screen.dart';
 import 'package:doctor_green/screen/tabs/blogs/blog_details_screen.dart';
+import 'package:doctor_green/screen/tabs/blogs/create_blog_screen.dart';
 import 'package:doctor_green/screen/tabs/disease_detection/detect_disease_screen.dart';
 import 'package:doctor_green/screen/tabs/disease_detection/disease_detection.dart';
 import 'package:doctor_green/screen/tabs/disease_detection/disease_result_screen.dart';
@@ -15,7 +16,7 @@ import 'package:image_picker/image_picker.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  // await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -32,16 +33,17 @@ class MyApp extends StatelessWidget {
       home: const SplashScreen(),
       routes: {
         SplashScreen.reouteName: (context) => const SplashScreen(),
-        LoginScreen.routeName: (context) => const LoginScreen(),
-        SignupScreen.routeName: (context) => const SignupScreen(),
+        kLoginScreenRoute: (context) => const LoginScreen(),
+        kSignupScreenRoute: (context) => const SignupScreen(),
         kHomeScreenRoute: (context) => HomeScreen(),
-        DiseaseDetectionScreen.routeName: (context) =>
+        kDiseaseDetectionScreenRoute: (context) =>
             const DiseaseDetectionScreen(),
-        DetectDiseaseScreen.routeName: (context) => DetectDiseaseScreen(),
-        DiseaseResultScreen.routeName: (context) => DiseaseResultScreen(
+        kDetectDiseaseScreenRoute: (context) => DetectDiseaseScreen(),
+        kDiseaseResultScreenRoute: (context) => DiseaseResultScreen(
             imageFile: ModalRoute.of(context)!.settings.arguments as XFile),
-        BlogDetailsScreen.routeName: (context) => BlogDetailsScreen(
+        kBlogDetailsScreenRoute: (context) => BlogDetailsScreen(
             blog: ModalRoute.of(context)!.settings.arguments as BlogsModel),
+        kCreateBlogScreenRoute: (context) => CreateBlogScren(),
       },
     );
   }

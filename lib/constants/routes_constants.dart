@@ -1,1 +1,10 @@
 const String kHomeScreenRoute = '/homeScreen';
+const String kLoginScreenRoute = '/loginScreen';
+const String kSignupScreenRoute = '/signupScreen';
+const String kDiseaseDetectionScreenRoute = '/diseaseDetectionScreen';
+const String kDetectDiseaseScreenRoute = '/detectDiseaseScreen';
+const String kDiseaseResultScreenRoute = '/diseaseResultScreen';
+const String kBlogDetailsScreenRoute = '/blogDetailsScreen';
+const String kBlogListScreenRoute = '/blogListScreen';
+const String kProfileScreenRoute = '/profileScreen';
+const String kCreateBlogScreenRoute = '/createBlogScreen';

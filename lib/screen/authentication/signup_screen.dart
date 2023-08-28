@@ -1,5 +1,9 @@
+import 'package:doctor_green/constants/routes_constants.dart';
+import 'package:doctor_green/helpers/dialogs/error_dialog.dart';
 import 'package:doctor_green/screen/authentication/login_screen.dart';
-import 'package:doctor_green/services/firbase_authentication.dart';
+import 'package:doctor_green/services/authentication/auth_service.dart';
+import 'package:doctor_green/services/exceptions/auth_exception.dart';
+import 'package:doctor_green/services/firebase_authentication.dart';
 import 'package:flutter/material.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -134,20 +138,29 @@ class _SignupScreenState extends State<SignupScreen> {
   void _submit() async {
     _formKey.currentState!.save();
     if (_formKey.currentState!.validate()) {
-      // bool isSuccessful = await Authentication.signup(
-      //         name: _name, email: _email, password: _password) ??
-      //     false;
-      // if (context.mounted) {
-      //   if (isSuccessful) {
-      //     Navigator.of(context)
-      //         .pushNamedAndRemoveUntil(LoginScreen.routeName, (route) => false);
-      //   } else {
-      //     ScaffoldMessenger.of(context).showSnackBar(
-      //         const SnackBar(content: Text("Something went wrong")));
-      //   }
-      //   ScaffoldMessenger.of(context).showSnackBar(
-      //       SnackBar(content: Text("Name: $_name, Email: $_email")));
-      // }
+      try {
+        await AuthService.firebase()
+            .createUser(
+          email: _email,
+          password: _password,
+          name: _name,
+        )
+            .then(
+          (_) {
+            // AuthService.firebase().sendEmailVerification();
+            Navigator.of(context).pushNamed(
+              kHomeScreenRoute,
+            );
+          },
+        );
+      } on AuthenticationException catch (e) {
+        if (context.mounted) {
+          showErrorDialog(
+            context,
+            e.getMessage,
+          );
+        }
+      }
     }
   }
 }

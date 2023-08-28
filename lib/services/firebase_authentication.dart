@@ -18,6 +18,7 @@ class FirebaseAuthProvider implements AuthProvider {
   Future<AuthUser> createUser({
     required String email,
     required String password,
+    required String name,
   }) async {
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -94,13 +95,13 @@ class FirebaseAuthProvider implements AuthProvider {
     }
   }
 
-  @override
-  Future<void> sendEmailVerification() async {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      await user.sendEmailVerification();
-    } else {
-      throw UserNotLoggedInAuthException();
-    }
-  }
+  // @override
+  // Future<void> sendEmailVerification() async {
+  //   final user = FirebaseAuth.instance.currentUser;
+  //   if (user != null) {
+  //     await user.sendEmailVerification();
+  //   } else {
+  //     throw UserNotLoggedInAuthException();
+  //   }
+  // }
 }
