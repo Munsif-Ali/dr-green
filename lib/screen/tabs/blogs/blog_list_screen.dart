@@ -31,7 +31,7 @@ class BlogListScreen extends StatelessWidget {
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
-              final List<BlogsModel> posts = snapshot.data!;
+              final List<BlogsModel> posts = snapshot.data ?? [];
               return ListView.builder(
                 itemCount: posts.length,
                 itemBuilder: (context, index) {
@@ -40,9 +40,10 @@ class BlogListScreen extends StatelessWidget {
                     child: ListTile(
                       leading: Hero(
                         tag: "${post.id}",
-                        child: const CircleAvatar(
+                        child: CircleAvatar(
                           backgroundImage: NetworkImage(
-                            "https://picsum.photos/id/18/100/100",
+                            post.imageUrl ??
+                                "https://picsum.photos/id/18/100/100",
                           ),
                         ),
                       ),

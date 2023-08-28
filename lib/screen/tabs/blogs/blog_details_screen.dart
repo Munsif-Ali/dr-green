@@ -20,57 +20,57 @@ class BlogDetailsScreen extends StatelessWidget {
         ),
         body: Column(
           children: [
-            Stack(
-              children: [
-                Hero(
-                  tag: "${blog.id}",
-                  child: Image.network(
-                    "https://picsum.photos/id/18/400/400",
+            Hero(
+              tag: "${blog.id}",
+              child: Image.network(
+                blog.imageUrl ?? "https://picsum.photos/id/18/400/400",
+                height: 250,
+                width: double.infinity,
+                fit: BoxFit.cover,
+                loadingBuilder: (BuildContext context, Widget child,
+                    ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return SizedBox(
                     height: 250,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                    loadingBuilder: (BuildContext context, Widget child,
-                        ImageChunkEvent? loadingProgress) {
-                      if (loadingProgress == null) return child;
-                      return SizedBox(
-                        height: 250,
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.expectedTotalBytes != null
-                                ? loadingProgress.cumulativeBytesLoaded /
-                                    loadingProgress.expectedTotalBytes!
-                                : null,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                Positioned(
-                  right: 20,
-                  top: 20,
-                  child: InkWell(
-                    onTap: () {},
-                    child: const Icon(
-                      Icons.favorite_border,
-                      size: 32,
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        value: loadingProgress.expectedTotalBytes != null
+                            ? loadingProgress.cumulativeBytesLoaded /
+                                loadingProgress.expectedTotalBytes!
+                            : null,
+                      ),
                     ),
-                  ),
-                ),
-              ],
+                  );
+                },
+              ),
             ),
             Expanded(
               child: ListView(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: Hero(
-                      tag: "title${blog.id}",
-                      child: Text(
-                        "${blog.title}",
-                        style: Theme.of(context).textTheme.displayLarge,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Hero(
+                            tag: "title${blog.id}",
+                            child: Text(
+                              "${blog.title}",
+                              style: Theme.of(context).textTheme.displayLarge,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
+                      InkWell(
+                        onTap: () {
+                          addToFavourite(blog.id);
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.all(10),
+                          child: Icon(Icons.favorite_border),
+                        ),
+                      )
+                    ],
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -83,5 +83,9 @@ class BlogDetailsScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void addToFavourite(String? id) {
+    // add this blog to favourite there is likes array in firestore add this user id to that array
   }
 }
