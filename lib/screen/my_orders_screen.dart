@@ -2,6 +2,7 @@ import 'package:doctor_green/constants/globals_variables.dart';
 import 'package:doctor_green/helpers/widgets/progress_bar.dart';
 import 'package:doctor_green/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class MyOrderScreen extends StatelessWidget {
@@ -21,7 +22,15 @@ class MyOrderScreen extends StatelessWidget {
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Text('No orders available.');
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  "assets/images/no_orders.jpeg",
+                ),
+                const Text("No Orders Found"),
+              ],
+            );
           } else {
             return ListView.builder(
               itemCount: snapshot.data?.length,
