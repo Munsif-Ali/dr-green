@@ -1,9 +1,14 @@
+import 'package:doctor_green/constants/globals_variables.dart';
 import 'package:doctor_green/constants/routes_constants.dart';
 import 'package:doctor_green/extensions/build_context_extensions.dart';
+import 'package:doctor_green/helpers/widgets/progress_bar.dart';
 import 'package:doctor_green/models/blogs_model.dart';
+import 'package:doctor_green/providers/blog_provider.dart';
+import 'package:doctor_green/providers/user_provider.dart';
 import 'package:doctor_green/screen/tabs/blogs/blog_details_screen.dart';
 import 'package:doctor_green/services/network.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BlogListScreen extends StatelessWidget {
   static const String routeName = "/blogListScreen";
@@ -25,6 +30,15 @@ class BlogListScreen extends StatelessWidget {
         //     ),
         //   ),
         // ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              print(
+                  "shared preference is ${Provider.of<UserProivder>(context, listen: false).user.toMap()} ");
+            },
+            icon: const Icon(Icons.print),
+          ),
+        ],
       ),
       body: FutureBuilder<List<BlogsModel>>(
         future: getPosts(),
@@ -67,9 +81,15 @@ class BlogListScreen extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                       onTap: () {
+                        final userId =
+                            Provider.of<UserProivder>(context, listen: false)
+                                .user
+                                .id;
+                        post.isLiked = post.likes?.contains(userId) ?? false;
+                        Provider.of<BlogProvider>(context, listen: false).blog =
+                            post;
                         Navigator.of(context).pushNamed(
                           BlogDetailsScreen.routeName,
-                          arguments: post,
                         );
                       },
                     ),
@@ -78,16 +98,24 @@ class BlogListScreen extends StatelessWidget {
               );
 
             default:
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return circularProgress();
           }
         },
       ),
       floatingActionButton: FloatingActionButton(
         heroTag: null,
         onPressed: () {
-          context.pushNamed(kCreateBlogScreenRoute);
+          if (Provider.of<UserProivder>(context, listen: false).user.isAdmin ??
+              false) {
+            context.pushNamed(kCreateBlogScreenRoute);
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text("You are not authorized to add blogs"),
+                duration: Duration(seconds: 2),
+              ),
+            );
+          }
         },
         child: const Icon(Icons.add),
       ),

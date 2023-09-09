@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:doctor_green/constants/globals_variables.dart';
+import 'package:doctor_green/providers/user_provider.dart';
 import 'package:doctor_green/services/authentication/auth_provider.dart';
 import 'package:doctor_green/services/authentication/auth_user.dart';
 import 'package:doctor_green/services/exceptions/auth_exception.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart'
     show FirebaseAuth, FirebaseAuthException;
+import 'package:provider/provider.dart';
 import '../../firebase_options.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -34,13 +38,14 @@ class FirebaseAuthProvider implements AuthProvider {
       final user = currentUser;
       if (user != null) {
         // store user data in firestore
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(user.id)
-            .set({'name': name, 'email': email});
+        await FirebaseFirestore.instance.collection('users').doc(user.id).set({
+          'name': name,
+          'email': email,
+          "isAdmin": false,
+        });
 
         // save user data in shared preferences
-        storeUserDataInSharedPref();
+        await storeUserDataInSharedPref();
         return user;
       } else {
         throw UserNotLoggedInAuthException();
@@ -82,7 +87,7 @@ class FirebaseAuthProvider implements AuthProvider {
       );
       final user = currentUser;
       if (user != null) {
-        storeUserDataInSharedPref();
+        await storeUserDataInSharedPref();
         return user;
       } else {
         throw UserNotLoggedInAuthException();
@@ -120,12 +125,13 @@ class FirebaseAuthProvider implements AuthProvider {
   //   }
   // }
 
-  void storeUserDataInSharedPref() async {
+  Future storeUserDataInSharedPref() async {
     final user = currentUser;
-    if (user != null) {
-      await sharedPreferences!.setString('id', user.id);
-      await sharedPreferences!.setString('name', user.name);
-      await sharedPreferences!.setString('email', user.email);
+    if (user != null && user.id != null) {
+      final userData =
+          (await firebaseFirestore.collection("users").doc(user.id).get())
+              .data();
+      await sharedPreferences?.setString("user", jsonEncode(userData));
     } else {
       throw UserNotLoggedInAuthException();
     }

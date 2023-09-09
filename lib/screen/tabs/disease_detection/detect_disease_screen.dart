@@ -15,7 +15,10 @@ class DetectDiseaseScreen extends StatelessWidget {
         title: Text(plant),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          const SizedBox(height: 10),
+          const Text("Common Diseases are:"),
           const Card(
             child: ExpansionTile(
               title: Text("Late blight"),
@@ -28,30 +31,30 @@ class DetectDiseaseScreen extends StatelessWidget {
               ],
             ),
           ),
-          const Card(
-            child: ExpansionTile(
-              title: Text("Gangrene"),
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                      "Gangrene is a slow-growing fungal disease of stored potatoes favoured by cool climates.\n\nEarly symptoms are small round, dark depressions that may appear dark grey to brown. These grow to resemble thumb impressions and may overlap, leaving ridges in between."),
-                ),
-              ],
-            ),
-          ),
-          const Card(
-            child: ExpansionTile(
-              title: Text("Common scab"),
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                      "Common scab, caused mainly by Streptomyces scabiei, is an unsightly blemish disease that can affect any crop where tubers experience a dry surface during the critical stage of three to six weeks after tuber initiation."),
-                ),
-              ],
-            ),
-          ),
+          // const Card(
+          //   child: ExpansionTile(
+          //     title: Text("Gangrene"),
+          //     children: [
+          //       Padding(
+          //         padding: EdgeInsets.all(8.0),
+          //         child: Text(
+          //             "Gangrene is a slow-growing fungal disease of stored potatoes favoured by cool climates.\n\nEarly symptoms are small round, dark depressions that may appear dark grey to brown. These grow to resemble thumb impressions and may overlap, leaving ridges in between."),
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          // const Card(
+          //   child: ExpansionTile(
+          //     title: Text("Common scab"),
+          //     children: [
+          //       Padding(
+          //         padding: EdgeInsets.all(8.0),
+          //         child: Text(
+          //             "Common scab, caused mainly by Streptomyces scabiei, is an unsightly blemish disease that can affect any crop where tubers experience a dry surface during the critical stage of three to six weeks after tuber initiation."),
+          //       ),
+          //     ],
+          //   ),
+          // ),
           const SizedBox(height: 20),
           ElevatedButton(
             onPressed: () {
@@ -68,6 +71,7 @@ class DetectDiseaseScreen extends StatelessWidget {
                                 .pickImage(source: ImageSource.camera)
                                 .then((image) {
                               if (image != null) {
+                                Navigator.pop(context);
                                 Navigator.of(context).pushNamed(
                                     DiseaseResultScreen.routeName,
                                     arguments: image);
@@ -83,6 +87,7 @@ class DetectDiseaseScreen extends StatelessWidget {
                                 .pickImage(source: ImageSource.gallery)
                                 .then((image) {
                               if (image != null) {
+                                Navigator.pop(context);
                                 Navigator.of(context).pushNamed(
                                     DiseaseResultScreen.routeName,
                                     arguments: image);

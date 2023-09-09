@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as fStorage;
 
 class CreateBlogScren extends StatefulWidget {
-  CreateBlogScren({super.key});
+  const CreateBlogScren({super.key});
 
   @override
   State<CreateBlogScren> createState() => _CreateBlogScrenState();
@@ -15,7 +15,6 @@ class CreateBlogScren extends StatefulWidget {
 
 class _CreateBlogScrenState extends State<CreateBlogScren> {
   final TextEditingController _titleController = TextEditingController();
-
   final TextEditingController _bodyController = TextEditingController();
 
   XFile? _imageFile;

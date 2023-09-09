@@ -1,5 +1,5 @@
-import 'package:doctor_green/screen/tabs/disease_detection/detect_disease_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:doctor_green/screen/tabs/disease_detection/detect_disease_screen.dart';
 
 class DiseaseDetectionScreen extends StatefulWidget {
   static const String routeName = "/diseaseDetectionScreen";
@@ -12,20 +12,11 @@ class DiseaseDetectionScreen extends StatefulWidget {
 class _DiseaseDetectionScreenState extends State<DiseaseDetectionScreen> {
   List<String> plantList = [
     "Potato",
-    "Tomato",
-    "Pepper",
-    "Onion",
-    "Garlic",
-    "Lady-Finger",
-    "Orange",
-    "Mangor",
-    "Apple",
   ];
 
   final List<Tab> tabs = const <Tab>[
-    Tab(text: 'Fruits'),
     Tab(text: 'Vegitables'),
-    Tab(text: 'Uncategorized'),
+    Tab(text: 'Fruits'),
   ];
   late List<Widget> pages;
   @override
@@ -67,34 +58,7 @@ class _DiseaseDetectionScreenState extends State<DiseaseDetectionScreen> {
           );
         },
       ),
-      const Text("Something"),
-      GridView.builder(
-        itemCount: plantList.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          mainAxisSpacing: 2,
-          crossAxisSpacing: 3,
-        ),
-        itemBuilder: (context, index) {
-          final plant = plantList[index];
-          return Card(
-            // color: Color.fromARGB(31, 252, 250, 250),
-            elevation: 3,
-            child: Column(
-              children: [
-               
-                const Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Placeholder(),
-                  ),
-                ),
-                Text(plant),
-              ],
-            ),
-          );
-        },
-      ),
+      const Center(child: Text("Models are comming soon")),
     ];
   }
 
@@ -113,6 +77,20 @@ class _DiseaseDetectionScreenState extends State<DiseaseDetectionScreen> {
         return Scaffold(
           appBar: AppBar(
             title: const Text("Detect Disease"),
+            // actions: [
+            //   IconButton(
+            //     onPressed: () async {
+            //       // http://192.168.1.100:8000/your-api-endpoint
+            //       print("clicked");
+            //       final response = await https
+            //           .get(Uri.parse("http://10.48.25.189:8000/testing"));
+            //       print("response is $response");
+            //     },
+            //     icon: const Icon(
+            //       Icons.network_cell,
+            //     ),
+            //   )
+            // ],
             bottom: TabBar(
               tabs: tabs,
             ),

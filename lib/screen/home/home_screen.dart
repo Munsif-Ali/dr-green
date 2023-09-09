@@ -55,7 +55,10 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 flex: 1,
                 child: IconButton(
-                  icon: const Icon(Icons.book),
+                  icon: Icon(
+                    Icons.book,
+                    color: _selectedIndex == 0 ? Colors.white : Colors.black,
+                  ),
                   onPressed: () {
                     setState(() {
                       _selectedIndex = 0;
@@ -66,7 +69,10 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 flex: 1,
                 child: IconButton(
-                  icon: const Icon(Icons.favorite),
+                  icon: Icon(
+                    Icons.favorite,
+                    color: _selectedIndex == 1 ? Colors.white : Colors.black,
+                  ),
                   onPressed: () {
                     setState(() {
                       _selectedIndex = 1;
@@ -81,7 +87,10 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 flex: 1,
                 child: IconButton(
-                  icon: const Icon(Icons.shopping_bag),
+                  icon: Icon(
+                    Icons.shopping_bag,
+                    color: _selectedIndex == 3 ? Colors.white : Colors.black,
+                  ),
                   onPressed: () {
                     setState(() {
                       _selectedIndex = 3;
@@ -92,7 +101,10 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 flex: 1,
                 child: IconButton(
-                  icon: const Icon(Icons.person),
+                  icon: Icon(
+                    Icons.person,
+                    color: _selectedIndex == 4 ? Colors.white : Colors.black,
+                  ),
                   onPressed: () {
                     setState(() {
                       _selectedIndex = 4;
@@ -113,9 +125,9 @@ class _HomeScreenState extends State<HomeScreen> {
               _selectedIndex = 2;
             });
           },
-          child: const Icon(
+          child: Icon(
             Icons.local_hospital,
-            color: Colors.white,
+            color: _selectedIndex == 2 ? Colors.white : Colors.black,
           ),
         ),
       ),

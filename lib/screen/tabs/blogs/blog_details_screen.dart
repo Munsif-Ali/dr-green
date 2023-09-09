@@ -1,13 +1,20 @@
+import 'package:doctor_green/constants/globals_variables.dart';
 import 'package:doctor_green/models/blogs_model.dart';
+import 'package:doctor_green/providers/blog_provider.dart';
+import 'package:doctor_green/services/network.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BlogDetailsScreen extends StatelessWidget {
   static const String routeName = "/blogDetailsScreen";
-  final BlogsModel blog;
-  const BlogDetailsScreen({Key? key, required this.blog}) : super(key: key);
+  const BlogDetailsScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final blogProvider = Provider.of<BlogProvider>(context);
+    final userId = sharedPreferences?.getString("id");
     return GestureDetector(
       onPanUpdate: (details) {
         if (details.delta.dx > 0) {
@@ -16,14 +23,15 @@ class BlogDetailsScreen extends StatelessWidget {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(blog.title ?? ""),
+          title: Text(blogProvider.blog?.title ?? ""),
         ),
         body: Column(
           children: [
             Hero(
-              tag: "${blog.id}",
+              tag: "${blogProvider.blog?.id}",
               child: Image.network(
-                blog.imageUrl ?? "https://picsum.photos/id/18/400/400",
+                blogProvider.blog?.imageUrl ??
+                    "https://picsum.photos/id/18/400/400",
                 height: 250,
                 width: double.infinity,
                 fit: BoxFit.cover,
@@ -53,28 +61,44 @@ class BlogDetailsScreen extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(10),
                           child: Hero(
-                            tag: "title${blog.id}",
+                            tag: "title${blogProvider.blog?.id}",
                             child: Text(
-                              "${blog.title}",
+                              "${blogProvider.blog?.title}",
                               style: Theme.of(context).textTheme.displayLarge,
                             ),
                           ),
                         ),
                       ),
                       InkWell(
-                        onTap: () {
-                          addToFavourite(blog.id);
+                        onTap: () async {
+                          if (userId != null) {
+                            blogProvider.likeOrDislike(userId,
+                                context: context);
+                          }
                         },
-                        child: const Padding(
-                          padding: EdgeInsets.all(10),
-                          child: Icon(Icons.favorite_border),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Consumer<BlogProvider>(
+                            builder: (context, value, child) {
+                              return Column(
+                                children: [
+                                  Icon(
+                                    value.blog?.isLiked ?? false
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                  ),
+                                  // Text("${value.blog?.likes?.length}"),
+                                ],
+                              );
+                            },
+                          ),
                         ),
                       )
                     ],
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Text("${blog.body}"),
+                    child: Text("${blogProvider.blog?.body}"),
                   ),
                 ],
               ),
@@ -85,7 +109,45 @@ class BlogDetailsScreen extends StatelessWidget {
     );
   }
 
-  void addToFavourite(String? id) {
-    // add this blog to favourite there is likes array in firestore add this user id to that array
-  }
+  // void addToFavourite(String? blogId, String userId) async {
+  //   // Reference to the Firestore collection containing user data
+  //   final userCollection = FirebaseFirestore.instance.collection('users');
+
+  //   // Reference to the specific user's document
+  //   final userDocRef = userCollection.doc(userId);
+
+  //   // Fetch user's data from Firestore
+  //   DocumentSnapshot userSnapshot = await userDocRef.get();
+  //   Map<String, dynamic> userData = userSnapshot.data() as Map<String, dynamic>;
+
+  //   // Get the current list of favorite blogs from the user's data
+  //   List<String> favoriteBlogs =
+  //       List<String>.from(userData['favorite_blogs'] ?? []);
+
+  //   // Check if the blogId is already in the favorites
+  //   if (favoriteBlogs.contains(blogId)) {
+  //     // If the blog is already in favorites, remove it
+  //     favoriteBlogs.remove(blogId);
+
+  //     // Also remove the user's ID from the blog's likes array
+  //     final blogDocRef =
+  //         FirebaseFirestore.instance.collection('blogs').doc(blogId);
+  //     await blogDocRef.update({
+  //       'likes': FieldValue.arrayRemove([userId]),
+  //     });
+  //   } else {
+  //     // If the blog is not in favorites, add it
+  //     favoriteBlogs.add(blogId!);
+
+  //     // Also add the user's ID to the blog's likes array
+  //     final blogDocRef =
+  //         FirebaseFirestore.instance.collection('blogs').doc(blogId);
+  //     await blogDocRef.update({
+  //       'likes': FieldValue.arrayUnion([userId]),
+  //     });
+  //   }
+
+  //   // Update the user's favorite blogs in Firestore
+  //   await userDocRef.update({'favorite_blogs': favoriteBlogs});
+  // }
 }

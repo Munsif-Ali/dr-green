@@ -1,10 +1,12 @@
 import 'package:doctor_green/constants/routes_constants.dart';
 import 'package:doctor_green/helpers/dialogs/error_dialog.dart';
+import 'package:doctor_green/providers/user_provider.dart';
 import 'package:doctor_green/screen/authentication/login_screen.dart';
 import 'package:doctor_green/services/authentication/auth_service.dart';
 import 'package:doctor_green/services/exceptions/auth_exception.dart';
 import 'package:doctor_green/services/firebase_authentication.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SignupScreen extends StatefulWidget {
   static const String routeName = "/signupScreen";
@@ -152,6 +154,8 @@ class _SignupScreenState extends State<SignupScreen> {
             .then(
           (_) {
             // AuthService.firebase().sendEmailVerification();
+            Provider.of<UserProivder>(context, listen: false).changeUserInfo(
+                email: _email, name: _name, id: _.id, isAdmin: _.isAdmin);
             Navigator.of(context).pushNamed(
               kHomeScreenRoute,
             );

@@ -1,4 +1,6 @@
 import 'dart:io' show File;
+import 'package:doctor_green/extensions/build_context_extensions.dart';
+import 'package:doctor_green/services/network.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -7,57 +9,52 @@ class DiseaseResultScreen extends StatelessWidget {
   const DiseaseResultScreen({super.key, this.imageFile});
   final XFile? imageFile;
 
-  Future<int> _future() async {
-    await Future.delayed(const Duration(seconds: 3));
-    return 1;
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: FutureBuilder(
-            future: _future(),
+        body: FutureBuilder<Map<String, dynamic>>(
+            future: getPrediction(imageFile!),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.done:
+                  final results = snapshot.data;
                   return Column(
                     children: [
-                      Expanded(
-                        flex: 1,
-                        child: Image.file(
-                          File(imageFile!.path),
-                          width: double.infinity,
-                          fit: BoxFit.cover,
-                        ),
+                      Image.file(
+                        File(imageFile!.path),
+                        width: double.infinity,
+                        height: context.getHeight * 0.6,
+                        fit: BoxFit.cover,
                       ),
-                      SizedBox(
-                        height: 50,
-                        child: Text(
-                          "Steps to Cure the disease",
-                          style: Theme.of(context).textTheme.headlineSmall,
-                        ),
+                      Text(
+                        "Results are :",
+                        style: Theme.of(context).textTheme.headlineSmall,
                       ),
-                      const Divider(
-                        indent: 30,
-                        endIndent: 30,
-                        thickness: 3,
-                        color: Colors.black,
-                      ),
-                      Expanded(
-                        flex: 2,
-                        child: ListView.builder(
-                          itemCount: 10,
-                          itemBuilder: (context, index) {
-                            return Card(
-                              child: SizedBox(
-                                height: 50,
-                                child: Text("Step#: $index"),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
+                      const SizedBox(height: 10),
+                      Text("Detected Disease: ${results?["class"]}"),
+                      const SizedBox(height: 10),
+                      Text("Probability is ${(results?["probability"] * 100)}")
+                      // const Divider(
+                      //   indent: 30,
+                      //   endIndent: 30,
+                      //   thickness: 3,
+                      //   color: Colors.black,
+                      // ),
+                      // Expanded(
+                      //   flex: 2,
+                      //   child: ListView.builder(
+                      //     itemCount: 10,
+                      //     itemBuilder: (context, index) {
+                      //       return Card(
+                      //         child: SizedBox(
+                      //           height: 50,
+                      //           child: Text("Step#: $index"),
+                      //         ),
+                      //       );
+                      //     },
+                      //   ),
+                      // ),
                     ],
                   );
                 default:

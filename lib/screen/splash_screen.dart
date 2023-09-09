@@ -1,9 +1,14 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:doctor_green/constants/globals_variables.dart';
 import 'package:doctor_green/constants/routes_constants.dart';
+import 'package:doctor_green/providers/user_provider.dart';
+import 'package:doctor_green/services/authentication/auth_service.dart';
+import 'package:doctor_green/services/authentication/auth_user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   static const String reouteName = "/splashScreen";
@@ -17,13 +22,21 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () {
-      final isLoggedIn =
-          sharedPreferences?.getString("email") != null ? true : false;
-      if (isLoggedIn) {
-        Navigator.of(context).pushReplacementNamed(kHomeScreenRoute);
-      } else {
-        Navigator.of(context).pushReplacementNamed(kLoginScreenRoute);
+      if (sharedPreferences != null) {
+        final isLoggedIn =
+            sharedPreferences?.getString("user") != null ? true : false;
+        if (isLoggedIn) {
+          final spUser = sharedPreferences?.getString("user");
+          print("user $spUser");
+          final user = AuthUser.fromJson(jsonDecode(spUser ?? "{}"));
+          Provider.of<UserProivder>(context, listen: false).user = user;
+        }
+        if (isLoggedIn) {
+          Navigator.of(context).pushReplacementNamed(kHomeScreenRoute);
+          return;
+        }
       }
+      Navigator.of(context).pushReplacementNamed(kLoginScreenRoute);
     });
   }
 

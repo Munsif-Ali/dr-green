@@ -7,6 +7,7 @@ class BlogsModel {
   List<String>? tags;
   List<String>? likes;
   int? reactions;
+  bool isLiked = false;
 
   BlogsModel({
     this.id,
@@ -17,6 +18,7 @@ class BlogsModel {
     this.likes,
     this.reactions,
     this.imageUrl,
+    this.isLiked = false,
   });
 
   BlogsModel.fromJson(Map<String, dynamic> json) {
@@ -32,6 +34,7 @@ class BlogsModel {
     }
 
     reactions = json['reactions'];
+    isLiked = json["isLiked"] ?? false;
   }
 
   Map<String, dynamic> toJson() {

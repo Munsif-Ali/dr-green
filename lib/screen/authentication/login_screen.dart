@@ -1,11 +1,17 @@
+import 'dart:convert';
+
+import 'package:doctor_green/constants/globals_variables.dart';
 import 'package:doctor_green/constants/routes_constants.dart';
 import 'package:doctor_green/helpers/dialogs/error_dialog.dart';
+import 'package:doctor_green/providers/user_provider.dart';
 import 'package:doctor_green/screen/authentication/signup_screen.dart';
 import 'package:doctor_green/screen/home/home_screen.dart';
 import 'package:doctor_green/services/authentication/auth_service.dart';
+import 'package:doctor_green/services/authentication/auth_user.dart';
 import 'package:doctor_green/services/exceptions/auth_exception.dart';
 import 'package:doctor_green/services/firebase_authentication.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = "/loginScreen";
@@ -91,13 +97,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ],
                   ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          kHomeScreenRoute, (route) => false);
-                    },
-                    child: const Text('Continue as Guest'),
-                  ),
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     Navigator.of(context).pushNamedAndRemoveUntil(
+                  //         kHomeScreenRoute, (route) => false);
+                  //   },
+                  //   child: const Text('Continue as Guest'),
+                  // ),
                 ],
               ),
             ),
@@ -119,6 +125,10 @@ class _LoginScreenState extends State<LoginScreen> {
             .then(
           (_) {
             var user = AuthService.firebase().currentUser;
+            final spUser = sharedPreferences?.getString("user");
+            print("spUser is $spUser");
+            Provider.of<UserProivder>(context, listen: false).user =
+                AuthUser.fromJson(jsonDecode(spUser ?? "{}"));
             if (user != null) {
               Navigator.of(context).pushNamedAndRemoveUntil(
                 kHomeScreenRoute,
