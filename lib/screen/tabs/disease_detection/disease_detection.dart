@@ -46,9 +46,13 @@ class _DiseaseDetectionScreenState extends State<DiseaseDetectionScreen> {
                         arguments: plant,
                       );
                     },
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Placeholder(),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Image.asset(
+                        "assets/images/${plant.toLowerCase()}.png",
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),

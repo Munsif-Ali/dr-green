@@ -7,6 +7,7 @@ import 'package:doctor_green/providers/user_provider.dart';
 import 'package:doctor_green/screen/tabs/blogs/blog_details_screen.dart';
 import 'package:doctor_green/screen/tabs/shop/product_details_screen.dart';
 import 'package:doctor_green/services/network.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -115,8 +116,9 @@ class _FavoriteScreenState extends State<FavoriteScreen>
             },
           ),
           FutureBuilder<List<ProductModel>>(
-            future:
-                getFavoriteProducts(sharedPreferences?.getString("id") ?? ""),
+            future: getFavoriteProducts(
+                Provider.of<UserProivder>(context, listen: false).user.id ??
+                    ""),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.done:
