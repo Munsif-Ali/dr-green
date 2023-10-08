@@ -12,18 +12,19 @@ class BlogProvider extends ChangeNotifier {
       notifyListeners();
       try {
         await addToFavourite(blog!.id, userId);
-        print("added");
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              likeStatus ? "removed from favorites" : "Added to favorites",
+        if (context.mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                likeStatus ? "removed from favorites" : "Added to favorites",
+              ),
+              duration: const Duration(seconds: 2),
             ),
-            duration: const Duration(seconds: 2),
-          ),
-        );
+          );
+        }
       } catch (e) {
-        print("Something went wrong");
         blog?.isLiked = likeStatus;
+        notifyListeners();
       }
     }
   }
