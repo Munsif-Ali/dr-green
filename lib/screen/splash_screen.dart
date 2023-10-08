@@ -4,7 +4,6 @@ import 'dart:ui';
 import 'package:doctor_green/constants/globals_variables.dart';
 import 'package:doctor_green/constants/routes_constants.dart';
 import 'package:doctor_green/providers/user_provider.dart';
-import 'package:doctor_green/services/authentication/auth_service.dart';
 import 'package:doctor_green/services/authentication/auth_user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';

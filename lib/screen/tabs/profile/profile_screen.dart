@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:doctor_green/constants/globals_variables.dart';
 import 'package:doctor_green/constants/routes_constants.dart';
 import 'package:doctor_green/providers/user_provider.dart';
+import 'package:doctor_green/screen/all_orders_screen.dart';
 import 'package:doctor_green/screen/cart_screen.dart';
 import 'package:doctor_green/screen/my_orders_screen.dart';
 import 'package:doctor_green/services/authentication/auth_service.dart';
@@ -99,14 +100,35 @@ class ProfileScreen extends StatelessWidget {
                     width: double.infinity,
                     child: TextButton.icon(
                       onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) {
-                            return MyOrderScreen();
-                          },
-                        ));
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const MyOrderScreen();
+                            },
+                          ),
+                        );
                       },
                       icon: const Icon(Icons.shop_sharp),
                       label: const Text("My Orders"),
+                      // color: Colors.blue,
+                    ),
+                  ),
+                ),
+                Card(
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: TextButton.icon(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const AllOrderScreen();
+                            },
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.shop_2),
+                      label: const Text("All Orders"),
                       // color: Colors.blue,
                     ),
                   ),
