@@ -11,7 +11,7 @@ class BlogProvider extends ChangeNotifier {
       blog?.isLiked = !likeStatus;
       notifyListeners();
       try {
-        await addToFavourite(blog!.id, userId);
+        await removeOrAddToFavourite(blog!.id, userId);
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(

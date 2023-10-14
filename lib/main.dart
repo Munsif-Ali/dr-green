@@ -56,8 +56,8 @@ class MyApp extends StatelessWidget {
           kDetectDiseaseScreenRoute: (context) => DetectDiseaseScreen(),
           kDiseaseResultScreenRoute: (context) => DiseaseResultScreen(
               imageFile: ModalRoute.of(context)!.settings.arguments as XFile),
-          kBlogDetailsScreenRoute: (context) => BlogDetailsScreen(),
-          kCreateBlogScreenRoute: (context) => CreateBlogScren(),
+          kBlogDetailsScreenRoute: (context) => const BlogDetailsScreen(),
+          kCreateBlogScreenRoute: (context) => const CreateBlogScren(),
         },
       ),
     );

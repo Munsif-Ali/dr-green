@@ -120,6 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: SizedBox(
         height: MediaQuery.of(context).viewInsets.bottom == 0 ? 56 : 0,
         child: FloatingActionButton(
+          shape: CircleBorder(),
           onPressed: () {
             setState(() {
               _selectedIndex = 2;

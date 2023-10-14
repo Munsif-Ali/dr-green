@@ -120,7 +120,7 @@ Future<Map<String, dynamic>> getPrediction(XFile imageFile) async {
   }
 }
 
-Future addToFavourite(String? blogId, String userId) async {
+Future removeOrAddToFavourite(String? blogId, String userId) async {
   // Reference to the Firestore collection containing user data
   final userCollection = FirebaseFirestore.instance.collection('users');
 
