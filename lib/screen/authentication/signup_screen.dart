@@ -46,6 +46,19 @@ class _SignupScreenState extends State<SignupScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
+                  Image.asset(
+                    "assets/images/app_logo.png",
+                    height: 100,
+                  ),
+                  const SizedBox(height: 16.0),
+                  // welcomeText(),
+                  Text(
+                    "Welcome to Doctor Green",
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const SizedBox(height: 16.0),
+                  const Text("Create your account"),
+                  const SizedBox(height: 16.0),
                   _buildFormField(
                     labelText: "Name",
                     hintText: "Enter your name",

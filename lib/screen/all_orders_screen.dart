@@ -32,7 +32,6 @@ class AllOrderScreen extends StatelessWidget {
               itemCount: snapshot.data?.length,
               itemBuilder: (context, index) {
                 final order = snapshot.data?[index];
-                print("Order is $order");
                 return Card(
                   child: ExpansionTile(
                     title: Text('Order ID: ${order?['order_id']}'),
@@ -71,10 +70,27 @@ class AllOrderScreen extends StatelessWidget {
                           Text("RS: ${order?["totalPrice"]}"),
                         ],
                       ),
-                      OutlinedButton(
-                        onPressed: () {},
-                        child: const Text("Deliver"),
-                      )
+                      order?["status"] == "To Be Delivered"
+                          ? OutlinedButton(
+                              onPressed: () async {
+                                // TODO: Implement Deliver Order
+
+                                final ordersCollection =
+                                    firebaseFirestore.collection('orders');
+                                await ordersCollection
+                                    .doc(order?["order_id"])
+                                    .update({"status": "delivered"});
+                                if (!context.mounted) return;
+                                Navigator.of(context).pop();
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text("Order Delivered"),
+                                  ),
+                                );
+                              },
+                              child: const Text("Deliver"),
+                            )
+                          : const SizedBox(),
                     ],
                   ),
                 );

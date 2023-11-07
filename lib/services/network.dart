@@ -26,26 +26,30 @@ Future<List<BlogsModel>> getPosts() async {
 }
 
 Future<List<BlogsModel>> getFavoritePosts(String userId) async {
-  print("user id $userId");
-  // Get the favorite ids list from the user collection.
-  final favoriteIds = await FirebaseFirestore.instance
-      .collection('users')
-      .doc(userId)
-      .get()
-      .then(
-        (value) => value.data()?["favorite_blogs"].toList(),
-      );
-  print("favorite ids $favoriteIds");
-  // Get the blogs from the blogs collection that match the favorite ids.
-  final blogs = await FirebaseFirestore.instance
-      .collection('blogs')
-      .where('id', whereIn: favoriteIds)
-      .get()
-      .then((snapshot) =>
-          snapshot.docs.map((doc) => BlogsModel.fromJson(doc.data())).toList());
-  print("blogs are ${blogs.length}");
+  try {
+    print("user id $userId");
+    // Get the favorite ids list from the user collection.
+    final favoriteIds = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .get()
+        .then(
+          (value) => value.data()?["favorite_blogs"].toList(),
+        );
+    // Get the blogs from the blogs collection that match the favorite ids.
+    final blogs = await FirebaseFirestore.instance
+        .collection('blogs')
+        .where('id', whereIn: favoriteIds)
+        .get()
+        .then((snapshot) => snapshot.docs
+            .map((doc) => BlogsModel.fromJson(doc.data()))
+            .toList());
 
-  return blogs;
+    return blogs;
+  } catch (e) {
+    print("error: $e");
+    return [];
+  }
 }
 
 Future<List<ProductModel>> getProducts() async {

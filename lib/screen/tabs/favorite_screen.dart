@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:doctor_green/constants/globals_variables.dart';
 import 'package:doctor_green/helpers/widgets/progress_bar.dart';
 import 'package:doctor_green/models/blogs_model.dart';
@@ -6,6 +8,7 @@ import 'package:doctor_green/providers/blog_provider.dart';
 import 'package:doctor_green/providers/user_provider.dart';
 import 'package:doctor_green/screen/tabs/blogs/blog_details_screen.dart';
 import 'package:doctor_green/screen/tabs/shop/product_details_screen.dart';
+import 'package:doctor_green/services/authentication/auth_user.dart';
 import 'package:doctor_green/services/network.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +36,8 @@ class _FavoriteScreenState extends State<FavoriteScreen>
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProivder>(context, listen: false).user;
+    print("user id is: ${user.id}");
     return Scaffold(
       appBar: AppBar(
         title: const Text("Favorites"),
@@ -53,7 +58,7 @@ class _FavoriteScreenState extends State<FavoriteScreen>
         controller: tabController,
         children: [
           FutureBuilder<List<BlogsModel>>(
-            future: getFavoritePosts(sharedPreferences?.getString("id") ?? ""),
+            future: getFavoritePosts(user.id ?? ""),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.done:

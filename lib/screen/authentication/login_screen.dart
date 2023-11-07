@@ -34,17 +34,29 @@ class _LoginScreenState extends State<LoginScreen> {
       appBar: AppBar(
         title: const Text('Login'),
       ),
-      backgroundColor: Colors.white,
       body: Form(
         key: _formKey,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: SingleChildScrollView(
-            child: SizedBox(
-              height: MediaQuery.of(context).size.height,
+            child: Center(
+              heightFactor: 1.5,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
+                  Image.asset(
+                    "assets/images/app_logo.png",
+                    height: 100,
+                  ),
+                  const SizedBox(height: 16.0),
+                  // welcomeText(),
+                  Text(
+                    "Welcome to Doctor Green",
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  const SizedBox(height: 16.0),
+                  const Text("Login to your account"),
+                  const SizedBox(height: 16.0),
                   TextFormField(
                     decoration: const InputDecoration(
                       labelText: 'Email',

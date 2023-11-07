@@ -11,6 +11,17 @@ final lightTheme = ThemeData(
     primary: Color(0xFF62BD69),
   ),
   brightness: Brightness.light,
+  appBarTheme: const AppBarTheme(
+    color: Colors.white,
+    elevation: 4,
+    iconTheme: IconThemeData(color: Color(0xFF62BD69)),
+    titleTextStyle: TextStyle(
+      color: Color(0xFF62BD69),
+      fontSize: 20,
+      fontFamily: 'Montserrat',
+      fontWeight: FontWeight.w600,
+    ),
+  ),
   scaffoldBackgroundColor: Colors.white,
   buttonTheme: const ButtonThemeData(
       buttonColor: Color(0xFF62BD69), textTheme: ButtonTextTheme.primary),

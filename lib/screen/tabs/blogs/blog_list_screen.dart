@@ -30,77 +30,78 @@ class BlogListScreen extends StatelessWidget {
         //     ),
         //   ),
         // ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              print(
-                  "shared preference is ${Provider.of<UserProivder>(context, listen: false).user.toMap()} ");
-            },
-            icon: const Icon(Icons.print),
-          ),
-        ],
       ),
-      body: FutureBuilder<List<BlogsModel>>(
-        future: getPosts(),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              final List<BlogsModel> posts = snapshot.data ?? [];
-              return ListView.builder(
-                itemCount: posts.length,
-                itemBuilder: (context, index) {
-                  final post = posts[index];
-                  return Card(
-                    child: ListTile(
-                      leading: Hero(
-                        tag: "${post.id}",
-                        child: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                            post.imageUrl ??
-                                "https://picsum.photos/id/18/100/100",
+      body: Container(
+        // make the picture little opaque
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              "assets/images/app_logo.png",
+            ),
+          ),
+        ),
+        child: FutureBuilder<List<BlogsModel>>(
+          future: getPosts(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.done:
+                final List<BlogsModel> posts = snapshot.data ?? [];
+                return ListView.builder(
+                  itemCount: posts.length,
+                  itemBuilder: (context, index) {
+                    final post = posts[index];
+                    return Card(
+                      child: ListTile(
+                        leading: Hero(
+                          tag: "${post.id}",
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(
+                              post.imageUrl ??
+                                  "https://picsum.photos/id/18/100/100",
+                            ),
                           ),
                         ),
-                      ),
-                      title: Hero(
-                        tag: "title${post.id}",
-                        child: Text(
-                          post.title ?? "",
+                        title: Hero(
+                          tag: "title${post.id}",
+                          child: Text(
+                            post.title ?? "",
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                        subtitle: Text(
+                          post.body ?? "",
                           style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w400,
                           ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
+                        onTap: () {
+                          final userId =
+                              Provider.of<UserProivder>(context, listen: false)
+                                  .user
+                                  .id;
+                          post.isLiked = post.likes?.contains(userId) ?? false;
+                          Provider.of<BlogProvider>(context, listen: false)
+                              .blog = post;
+                          Navigator.of(context).pushNamed(
+                            BlogDetailsScreen.routeName,
+                          );
+                        },
                       ),
-                      subtitle: Text(
-                        post.body ?? "",
-                        style: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      onTap: () {
-                        final userId =
-                            Provider.of<UserProivder>(context, listen: false)
-                                .user
-                                .id;
-                        post.isLiked = post.likes?.contains(userId) ?? false;
-                        Provider.of<BlogProvider>(context, listen: false).blog =
-                            post;
-                        Navigator.of(context).pushNamed(
-                          BlogDetailsScreen.routeName,
-                        );
-                      },
-                    ),
-                  );
-                },
-              );
+                    );
+                  },
+                );
 
-            default:
-              return circularProgress();
-          }
-        },
+              default:
+                return circularProgress();
+            }
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         heroTag: null,

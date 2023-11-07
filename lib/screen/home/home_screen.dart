@@ -43,9 +43,11 @@ class _HomeScreenState extends State<HomeScreen> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomAppBar(
+        height: 50,
         shape: const CircularNotchedRectangle(),
         color: Colors.green,
         notchMargin: 5,
+        padding: EdgeInsets.zero,
         elevation: 5,
         child: SizedBox(
           height: 50.0,
@@ -120,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: SizedBox(
         height: MediaQuery.of(context).viewInsets.bottom == 0 ? 56 : 0,
         child: FloatingActionButton(
-          shape: CircleBorder(),
+          shape: const CircleBorder(),
           onPressed: () {
             setState(() {
               _selectedIndex = 2;
