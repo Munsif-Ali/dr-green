@@ -1,5 +1,6 @@
 import 'package:doctor_green/helpers/widgets/progress_bar.dart';
 import 'package:doctor_green/models/product_model.dart';
+import 'package:doctor_green/providers/product_provider.dart';
 import 'package:doctor_green/providers/user_provider.dart';
 import 'package:doctor_green/screen/tabs/shop/add_product_screen.dart';
 import 'package:doctor_green/screen/tabs/shop/product_details_screen.dart';
@@ -40,62 +41,71 @@ class _ShopScreenState extends State<ShopScreen> {
                 itemBuilder: (context, index) {
                   final product = products[index];
                   return Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) {
-                              return ProductDetailsScreen(
-                                product: product,
-                              );
-                            },
-                          ));
-                        },
-                        child: Stack(
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.network(
-                                product.prodImage!,
-                                fit: BoxFit.cover,
-                                width: double.infinity,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        final userId =
+                            Provider.of<UserProivder>(context, listen: false)
+                                .user
+                                .id;
+                        product.isLiked =
+                            product.likes?.contains(userId) ?? false;
+                        Provider.of<ProductProvider>(context, listen: false)
+                            .product = product;
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) {
+                            return ProductDetailsScreen(
+                              product: product,
+                            );
+                          },
+                        ));
+                      },
+                      child: Stack(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              product.prodImage!,
+                              fit: BoxFit.cover,
+                              width: double.infinity,
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                color: Colors.black54,
+                                borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(10),
+                                  bottomRight: Radius.circular(10),
+                                ),
+                              ),
+                              padding: const EdgeInsets.only(left: 5),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "${product.prodName}",
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  Text(
+                                    "RS: ${product.prodPrice}",
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
-                            Positioned(
-                              bottom: 0,
-                              left: 0,
-                              right: 0,
-                              child: Container(
-                                decoration: const BoxDecoration(
-                                  color: Colors.black54,
-                                  borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(10),
-                                    bottomRight: Radius.circular(10),
-                                  ),
-                                ),
-                                padding: const EdgeInsets.only(left: 5),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "${product.prodName}",
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    Text(
-                                      "RS: ${product.prodPrice}",
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ));
+                          )
+                        ],
+                      ),
+                    ),
+                  );
                 },
               );
 

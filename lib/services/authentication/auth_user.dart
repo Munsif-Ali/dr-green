@@ -26,6 +26,7 @@ class AuthUser {
     favoriteBlogs = json['favorite_blogs']?.cast<String>();
     isAdmin = json['isAdmin'] ?? false;
     email = json['email'];
+    id = json['id'];
   }
   Map<String, dynamic> toMap() {
     final data = <String, dynamic>{};

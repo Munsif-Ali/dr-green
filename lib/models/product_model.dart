@@ -6,6 +6,7 @@ class ProductModel {
   String? prodCategory;
   int? prodPrice;
   List<String>? likes;
+  bool isLiked = false;
 
   ProductModel({
     this.prodId,
@@ -15,6 +16,7 @@ class ProductModel {
     this.prodName,
     this.prodPrice,
     this.likes,
+    this.isLiked = false,
   });
 
   ProductModel.fromJson(Map<String, dynamic> json) {
@@ -27,6 +29,7 @@ class ProductModel {
     if (json["likes"] != null) {
       likes = json["likes"].cast<String>();
     }
+    isLiked = json["isLiked"] ?? false;
   }
 
   Map<String, dynamic> toJson() {

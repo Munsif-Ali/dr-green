@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:doctor_green/constants/globals_variables.dart';
 import 'package:doctor_green/models/blogs_model.dart';
 import 'package:doctor_green/providers/blog_provider.dart';
+import 'package:doctor_green/services/authentication/auth_user.dart';
 import 'package:doctor_green/services/network.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +17,8 @@ class BlogDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final blogProvider = Provider.of<BlogProvider>(context);
-    final userId = sharedPreferences?.getString("id");
+    final user = AuthUser.fromJson(
+        jsonDecode(sharedPreferences?.getString("user") ?? "{}"));
     return GestureDetector(
       onPanUpdate: (details) {
         if (details.delta.dx > 0) {
@@ -71,8 +75,11 @@ class BlogDetailsScreen extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () async {
-                          if (userId != null) {
-                            blogProvider.likeOrDislike(userId,
+                          print(
+                              "user is ${sharedPreferences?.getString("user") ?? "{}"}");
+                          print("User ID: ${user.id}");
+                          if (user.id != null) {
+                            blogProvider.likeOrDislike(user.id!,
                                 context: context);
                           }
                         },

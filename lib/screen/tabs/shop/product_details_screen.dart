@@ -2,6 +2,7 @@ import 'package:doctor_green/constants/globals_variables.dart';
 import 'package:doctor_green/extensions/build_context_extensions.dart';
 import 'package:doctor_green/models/product_model.dart';
 import 'package:doctor_green/providers/cart_provider.dart';
+import 'package:doctor_green/providers/product_provider.dart';
 import 'package:doctor_green/providers/user_provider.dart';
 import 'package:doctor_green/screen/cart_screen.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,8 @@ class ProductDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cart = Provider.of<CartProvider>(context);
-    final user = Provider.of<UserProivder>(context);
+    final user = Provider.of<UserProivder>(context).user;
+    final productProvider = Provider.of<ProductProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("${product.prodName}"),
@@ -25,7 +27,7 @@ class ProductDetailsScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) {
-                      return CartScreen();
+                      return const CartScreen();
                     },
                   ));
                 },
@@ -91,23 +93,41 @@ class ProductDetailsScreen extends StatelessWidget {
                   const SizedBox(height: 10),
                   Row(
                     children: [
-                      Chip(
-                        label: Text("${product.prodCategory}"),
-                      ),
+                      product.prodCategory != null &&
+                              product.prodCategory!.isNotEmpty
+                          ? Chip(
+                              label: Text("${product.prodCategory}"),
+                            )
+                          : const SizedBox(),
                       const Spacer(),
                       Column(
                         children: [
                           InkWell(
-                            onTap: () {
-                              addToFavourite(product.prodId, user.user.id!);
+                            onTap: () async {
+                              print(
+                                  "user is ${sharedPreferences?.getString("user") ?? "{}"}");
+                              print("User ID: ${user.id}");
+                              if (user.id != null) {
+                                productProvider.likeOrDislike(user.id!,
+                                    context: context);
+                              }
                             },
-                            child: Icon(
-                              product.likes!.contains(user.user.id)
-                                  ? Icons.favorite
-                                  : Icons.favorite_border,
+                            child: Consumer<ProductProvider>(
+                              builder: (context, value, child) {
+                                return Column(
+                                  children: [
+                                    Icon(
+                                      value.product?.isLiked ?? false
+                                          ? Icons.favorite
+                                          : Icons.favorite_border,
+                                    ),
+                                    // Text("${value.blog?.likes?.length}"),
+                                  ],
+                                );
+                              },
                             ),
                           ),
-                          Text("${product.likes?.length}")
+                          // Text("${product.likes?.length}")
                         ],
                       ),
                     ],

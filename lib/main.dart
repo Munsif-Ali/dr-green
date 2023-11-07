@@ -3,6 +3,7 @@ import 'package:doctor_green/constants/routes_constants.dart';
 import 'package:doctor_green/models/blogs_model.dart';
 import 'package:doctor_green/providers/blog_provider.dart';
 import 'package:doctor_green/providers/cart_provider.dart';
+import 'package:doctor_green/providers/product_provider.dart';
 import 'package:doctor_green/providers/user_provider.dart';
 import 'package:doctor_green/screen/authentication/login_screen.dart';
 import 'package:doctor_green/screen/authentication/signup_screen.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
           create: (context) => BlogProvider(),
         ),
         ChangeNotifierProvider(create: (_) => CartProvider()),
+        ChangeNotifierProvider(create: (_) => ProductProvider()),
       ],
       child: MaterialApp(
         title: 'Doctor Green',

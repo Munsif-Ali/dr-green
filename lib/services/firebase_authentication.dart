@@ -42,6 +42,7 @@ class FirebaseAuthProvider implements AuthProvider {
           'name': name,
           'email': email,
           "isAdmin": false,
+          "id": user.id,
         });
 
         // save user data in shared preferences
