@@ -5,6 +5,7 @@ import 'package:doctor_green/helpers/widgets/progress_bar.dart';
 import 'package:doctor_green/models/blogs_model.dart';
 import 'package:doctor_green/models/product_model.dart';
 import 'package:doctor_green/providers/blog_provider.dart';
+import 'package:doctor_green/providers/product_provider.dart';
 import 'package:doctor_green/providers/user_provider.dart';
 import 'package:doctor_green/screen/tabs/blogs/blog_details_screen.dart';
 import 'package:doctor_green/screen/tabs/shop/product_details_screen.dart';
@@ -106,9 +107,13 @@ class _FavoriteScreenState extends State<FavoriteScreen>
                                 post.likes?.contains(userId) ?? false;
                             Provider.of<BlogProvider>(context, listen: false)
                                 .blog = post;
-                            Navigator.of(context).pushNamed(
+                            Navigator.of(context)
+                                .pushNamed(
                               BlogDetailsScreen.routeName,
-                            );
+                            )
+                                .then((value) {
+                              setState(() {});
+                            });
                           },
                         ),
                       );
@@ -140,14 +145,25 @@ class _FavoriteScreenState extends State<FavoriteScreen>
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: InkWell(
-                            onTap: () {
+                            onTap: () async {
+                              final userId = Provider.of<UserProivder>(context,
+                                      listen: false)
+                                  .user
+                                  .id;
+                              product.isLiked =
+                                  product.likes?.contains(userId) ?? false;
+                              Provider.of<ProductProvider>(context,
+                                      listen: false)
+                                  .product = product;
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) {
                                   return ProductDetailsScreen(
                                     product: product,
                                   );
                                 },
-                              ));
+                              )).then((value) {
+                                setState(() {});
+                              });
                             },
                             child: Stack(
                               children: [

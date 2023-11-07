@@ -27,7 +27,6 @@ Future<List<BlogsModel>> getPosts() async {
 
 Future<List<BlogsModel>> getFavoritePosts(String userId) async {
   try {
-    print("user id $userId");
     // Get the favorite ids list from the user collection.
     final favoriteIds = await FirebaseFirestore.instance
         .collection('users')
@@ -47,7 +46,6 @@ Future<List<BlogsModel>> getFavoritePosts(String userId) async {
 
     return blogs;
   } catch (e) {
-    print("error: $e");
     return [];
   }
 }
@@ -65,13 +63,11 @@ Future<List<ProductModel>> getProducts() async {
     }
     return products;
   } catch (e) {
-    print("error: $e");
     return [];
   }
 }
 
 Future<List<ProductModel>> getFavoriteProducts(String userId) async {
-  print("user id $userId");
   // Get the favorite ids list from the user collection.
   final favoriteIds = await FirebaseFirestore.instance
       .collection('users')
@@ -80,7 +76,7 @@ Future<List<ProductModel>> getFavoriteProducts(String userId) async {
       .then(
         (value) => value.data()?["favorite_products"].toList(),
       );
-  print("favorite ids $favoriteIds");
+
   // Get the blogs from the blogs collection that match the favorite ids.
   final blogs = await FirebaseFirestore.instance
       .collection('products')
@@ -89,7 +85,6 @@ Future<List<ProductModel>> getFavoriteProducts(String userId) async {
       .then((snapshot) => snapshot.docs
           .map((doc) => ProductModel.fromJson(doc.data()))
           .toList());
-  print("blogs are ${blogs.length}");
 
   return blogs;
 }
@@ -98,28 +93,22 @@ Future<Map<String, dynamic>> getPrediction(XFile imageFile) async {
   // final respoose =
   //     await https.post(Uri.parse("http://10.48.25.189:8000/predict"));
   try {
-    print("${imageFile?.path}");
     var request = http.MultipartRequest(
         'POST', Uri.parse('https://85hmt33n-8000.inc1.devtunnels.ms/predict'));
     request.files
         .add(await http.MultipartFile.fromPath('file', imageFile.path));
-    print("test 0");
+
     http.StreamedResponse response = await request.send();
-    print("test 1");
 
     if (response.statusCode == 200) {
-      print("test 2");
       final results = await response.stream.bytesToString();
-      print("response if $results");
-      print('test 3');
+
       final jsonData = jsonDecode(results);
       return jsonData;
     } else {
-      print(response.reasonPhrase);
       throw Exception("Somtehing went wrong");
     }
   } catch (e) {
-    print("Somtehing went wrong $e");
     rethrow;
   }
 }

@@ -75,9 +75,6 @@ class BlogDetailsScreen extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () async {
-                          print(
-                              "user is ${sharedPreferences?.getString("user") ?? "{}"}");
-                          print("User ID: ${user.id}");
                           if (user.id != null) {
                             blogProvider.likeOrDislike(user.id!,
                                 context: context);
