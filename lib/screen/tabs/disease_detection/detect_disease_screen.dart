@@ -103,7 +103,7 @@ class DetectDiseaseScreen extends StatelessWidget {
                 },
               );
             },
-            child: const Text("Detect Noew"),
+            child: const Text("Detect Now"),
           )
         ],
       ),
