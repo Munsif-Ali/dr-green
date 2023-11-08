@@ -18,6 +18,7 @@ class ShopScreen extends StatefulWidget {
 class _ShopScreenState extends State<ShopScreen> {
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProivder>(context).user;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Shop'),
@@ -114,31 +115,35 @@ class _ShopScreenState extends State<ShopScreen> {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        heroTag: null,
-        onPressed: () {
-          if (Provider.of<UserProivder>(context, listen: false).user.isAdmin ??
-              false) {
-            Navigator.of(context)
-                .push(
-              MaterialPageRoute(
-                builder: (context) => const AddProductScreen(),
-              ),
+      floatingActionButton: user.isAdmin ?? false
+          ? FloatingActionButton(
+              heroTag: null,
+              onPressed: () {
+                if (Provider.of<UserProivder>(context, listen: false)
+                        .user
+                        .isAdmin ??
+                    false) {
+                  Navigator.of(context)
+                      .push(
+                    MaterialPageRoute(
+                      builder: (context) => const AddProductScreen(),
+                    ),
+                  )
+                      .then((value) {
+                    setState(() {});
+                  });
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("You are not authorized to add products"),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                }
+              },
+              child: const Icon(Icons.add),
             )
-                .then((value) {
-              setState(() {});
-            });
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text("You are not authorized to add products"),
-                duration: Duration(seconds: 2),
-              ),
-            );
-          }
-        },
-        child: const Icon(Icons.add),
-      ),
+          : const SizedBox(),
     );
   }
 }

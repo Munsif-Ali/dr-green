@@ -16,6 +16,7 @@ class BlogListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProivder>(context).user;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Blogs"),
@@ -103,23 +104,27 @@ class BlogListScreen extends StatelessWidget {
           },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        heroTag: null,
-        onPressed: () {
-          if (Provider.of<UserProivder>(context, listen: false).user.isAdmin ??
-              false) {
-            context.pushNamed(kCreateBlogScreenRoute);
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                content: Text("You are not authorized to add blogs"),
-                duration: Duration(seconds: 2),
-              ),
-            );
-          }
-        },
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: user.isAdmin ?? false
+          ? FloatingActionButton(
+              heroTag: null,
+              onPressed: () {
+                if (Provider.of<UserProivder>(context, listen: false)
+                        .user
+                        .isAdmin ??
+                    false) {
+                  context.pushNamed(kCreateBlogScreenRoute);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("You are not authorized to add blogs"),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                }
+              },
+              child: const Icon(Icons.add),
+            )
+          : const SizedBox(),
     );
   }
 }

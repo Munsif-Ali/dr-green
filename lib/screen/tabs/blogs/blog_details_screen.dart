@@ -100,9 +100,15 @@ class BlogDetailsScreen extends StatelessWidget {
                       )
                     ],
                   ),
+                  const SizedBox(height: 20),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Text("${blogProvider.blog?.body}"),
+                    child: Text(
+                      "${blogProvider.blog?.body}",
+                      style: const TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
                   ),
                 ],
               ),

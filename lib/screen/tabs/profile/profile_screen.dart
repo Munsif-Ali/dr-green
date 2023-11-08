@@ -114,25 +114,27 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Card(
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: TextButton.icon(
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return const AllOrderScreen();
+                user.isAdmin ?? false
+                    ? Card(
+                        child: SizedBox(
+                          width: double.infinity,
+                          child: TextButton.icon(
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return const AllOrderScreen();
+                                  },
+                                ),
+                              );
                             },
+                            icon: const Icon(Icons.shop_2),
+                            label: const Text("All Orders"),
+                            // color: Colors.blue,
                           ),
-                        );
-                      },
-                      icon: const Icon(Icons.shop_2),
-                      label: const Text("All Orders"),
-                      // color: Colors.blue,
-                    ),
-                  ),
-                ),
+                        ),
+                      )
+                    : const SizedBox(),
                 Card(
                   child: SizedBox(
                     width: double.infinity,

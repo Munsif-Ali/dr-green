@@ -43,11 +43,21 @@ class _DiseaseResultScreenState extends State<DiseaseResultScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Results"),
+      ),
       body: SafeArea(
         child: FutureBuilder<Map<String, dynamic>>(
           future: getPrediction(widget.imageFile!),
           builder: (context, snapshot) {
-            if (snapshot.hasError) {}
+            if (snapshot.hasError) {
+              return Center(
+                child: Text(
+                  "Error: ${snapshot.error}",
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+              );
+            }
             switch (snapshot.connectionState) {
               case ConnectionState.done:
                 _animationController.stop();
@@ -67,7 +77,8 @@ class _DiseaseResultScreenState extends State<DiseaseResultScreen>
                     const SizedBox(height: 10),
                     Text("Detected Disease: ${results?["class"]}"),
                     const SizedBox(height: 10),
-                    Text("Probability is ${(results?["probability"] * 100)}")
+                    Text(
+                        "Probability is ${((results?["probability"] * 100) as double).toStringAsFixed(2)}")
                   ],
                 );
               default:
@@ -75,19 +86,16 @@ class _DiseaseResultScreenState extends State<DiseaseResultScreen>
                 _animationController.repeat(reverse: true);
                 return Stack(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: CupertinoColors.white),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(12))),
-                        child: Image.file(
-                          File(widget.imageFile!.path),
-                          width: double.infinity,
-                          height: context.getHeight * 0.6,
-                          fit: BoxFit.cover,
-                        ),
+                    Container(
+                      decoration: BoxDecoration(
+                          border: Border.all(color: CupertinoColors.white),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(12))),
+                      child: Image.file(
+                        File(widget.imageFile!.path),
+                        width: double.infinity,
+                        height: context.getHeight * 0.6,
+                        fit: BoxFit.cover,
                       ),
                     ),
                     ImageScannerAnimation(

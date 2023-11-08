@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
+const baseUrl = "https://85hmt33n-8000.inc1.devtunnels.ms/";
+
 Future<List<BlogsModel>> getPosts() async {
   ("getPosts called");
   // get blogs from firestore
@@ -93,8 +95,7 @@ Future<Map<String, dynamic>> getPrediction(XFile imageFile) async {
   // final respoose =
   //     await https.post(Uri.parse("http://10.48.25.189:8000/predict"));
   try {
-    var request = http.MultipartRequest(
-        'POST', Uri.parse('https://85hmt33n-8000.inc1.devtunnels.ms/predict'));
+    var request = http.MultipartRequest('POST', Uri.parse('${baseUrl}predict'));
     request.files
         .add(await http.MultipartFile.fromPath('file', imageFile.path));
 
